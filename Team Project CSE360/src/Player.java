@@ -16,15 +16,6 @@ public class Player
 			name = inName;
 			score = inScore;
 		}
-		
-		/** setName will set local variable 'name' to the contents of the parameter inName
-		*
-		*@param inName				inName is the player name that user inputs
-		*/
-
-		public void setName(String inName){
-			name = inName;
-		}
 
 		/** setScore will set local variable 'score' to the contents of the parameter inScore
 		*
