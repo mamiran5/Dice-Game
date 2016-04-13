@@ -25,7 +25,7 @@ public class Game {
 		}
 		
 		for(int turnCount = 0; turnCount < turnTotal; turnCount++){
-			turns.startTurn();
+			turns.turnStart();
 		}
 		
 		Player winner = playerList[0];
@@ -93,19 +93,3 @@ public class Game {
 	}
 	
 }
-
-/* Meant for Turn Class
-	public void startTurn(){
-		turns.rollDice();
-		
-		for(int pairsDecided = 0; pairsDecided < playerNum; pairsDecided++){
-			playerList[pairsDecided].pairDice();
-		}
-		
-		// I'm not sure we devised a way to set Dice Pairs for each round
-		
-		for(int roundsFinished = 0; roundsFinished < 3; roundsFinished++){
-			turns.startRound();
-		}
-	}
-*/
