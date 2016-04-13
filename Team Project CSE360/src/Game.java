@@ -23,7 +23,7 @@ public class Game {
 		}
 		
 		for(int turnCount = 0; turnCount < turnTotal; turnCount++){
-			turns.turnStart();
+			turns.startTurn();
 		}
 		
 		Player winner = playerList[0];
