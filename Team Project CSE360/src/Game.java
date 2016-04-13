@@ -19,9 +19,7 @@ public class Game {
 		for(int playersAdded = 0; playersAdded < playerNum; playersAdded++){
 			System.out.println("Please enter a player name!");
 			playerName = in.next();
-			playerList[playersAdded] = new Player();
-			playerList[playersAdded].setName(playerName);
-			playerList[playersAdded].setScore(500);
+			playerList[playersAdded] = new Player(playerName, 500);
 		}
 		
 		for(int turnCount = 0; turnCount < turnTotal; turnCount++){
