@@ -26,6 +26,11 @@ public class Player
 			score = inScore;
 		}
 		
+		public void modifyScore (int modScore)
+		{
+			score += modScore;
+		}
+		
 		public void setDicePairs(DicePair first, DicePair second, DicePair third){
 			pairs[0] = first;
 			pairs[1] = second;
@@ -49,8 +54,15 @@ public class Player
 		public int getScore(){
 			return score;
 		}
-		public DicePair[] getDicePairs(){
+		public DicePair[] getDicePairs()
+		{
 			return pairs;
+		}
+		
+		//Added toString Method
+		public String toString()
+		{
+			return name;
 		}
 		
 }
