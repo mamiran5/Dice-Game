@@ -13,7 +13,7 @@ public class Game {
 		int playerNum = in.nextInt();
 		
 		Player [] playerList = new Player[playerNum];
-		Turn turns = new Turn();
+		
 		String playerName;
 		
 		for(int playersAdded = 0; playersAdded < playerNum; playersAdded++){
@@ -21,6 +21,8 @@ public class Game {
 			playerName = in.next();
 			playerList[playersAdded] = new Player(playerName, 500);
 		}
+		
+		Turn turns = new Turn(playerList);
 		
 		for(int turnCount = 0; turnCount < turnTotal; turnCount++){
 			turns.startTurn();
