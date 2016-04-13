@@ -12,6 +12,11 @@ public class Player
 		/** score is an int that holds the player's current score. */
 		private int score;
 
+		public Player(String inName, int inScore){
+			name = inName;
+			score = inScore;
+		}
+		
 		/** setName will set local variable 'name' to the contents of the parameter inName
 		*
 		*@param inName				inName is the player name that user inputs
