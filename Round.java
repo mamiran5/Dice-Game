@@ -23,6 +23,27 @@ public class Round
 		
 		//Reward Points based on Round Number.
 		
+		//Test Rolls
+		Iterator<Player> rollingPlayerIterator = playerList.iterator();
+		
+		
+		int testCount = 1;
+		
+		while (rollingPlayerIterator.hasNext()) 
+		{
+			Player newPlayer = rollingPlayerIterator.next();
+			
+			System.out.println("Player " + testCount + " rolled a : " 
+						+ newPlayer.getDicePairs()[numberOfRound].getSum() );
+			testCount++;
+				
+		}
+		
+		System.out.println();
+		
+		//Declare Winner
+		
+		
 		switch(numberOfRound)
 		{
 			
@@ -38,6 +59,8 @@ public class Round
 			default:
 				//Throw Exception, Invalid Round Number
 		}
+		
+		
 	}
 	
 }
