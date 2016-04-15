@@ -42,7 +42,8 @@ public class Player
 		*@return name				name is the name of the player
 		*/
 
-		public String getName(){
+		public String getName()
+		{
 			return name;
 		}
 
@@ -51,6 +52,19 @@ public class Player
 		*@return score				score is the player's current score
 		*/
 
+		/**public int getDiceForRound(int roundNumber) 
+		 * 
+		 * returns the sum of the player's rolls for the round indicated.
+		 * 
+		 * @param roundNumber		The round in which you are checking the player's roll
+		 * @return pairRollValue	The value of the rolls they are using for that round.
+		 */
+		public int getDiceForRound(int roundNumber)
+		{
+			int pairRollValue = pairs[roundNumber].getSum();
+			return pairRollValue;
+		}
+		
 		public int getScore(){
 			return score;
 		}
