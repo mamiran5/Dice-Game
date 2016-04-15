@@ -125,17 +125,21 @@ public class Round
 			case 1:
 				//Award First Round - 200 Points
 				winnerList.get(0).modifyScore(200);
+				break;
 				
 			case 2:
 				//Award Second Round - 150 Points
 				winnerList.get(0).modifyScore(150);
+				break;
 				
 			case 3:
 				//Award Third Round - 100 Points
 				winnerList.get(0).modifyScore(100);
+				break;
 				
 			default:
 				//Throw Exception, Invalid Round Number
+				break:
 		}
 		
 		
