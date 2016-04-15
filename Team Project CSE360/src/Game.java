@@ -29,7 +29,7 @@ public class Game {
 		}
 		
 		Player winner = playerList[0];
-		ArrayList <Player> tieWinners = new <Player> ArrayList();
+		ArrayList <Player> tieWinners = new ArrayList <Player >();
 		int tieNumber = 0;
 		
 		for(int playersChecked = 1; playersChecked < playerNum; playersChecked++){
@@ -48,9 +48,12 @@ public class Game {
 		}
 		
 		if(tieNumber != 0){
+			tieWinners.add(winner);
+			tieNumber = tieWinners.size();
+			
 			int highestRoll = 0;
 			int newRoll = 0;
-			ArrayList <Player> newTieWinners = new <Player> ArrayList();
+			ArrayList <Player> newTieWinners = new ArrayList <Player> ();
 			int newTieNumber = 0;
 			boolean winnerUndecided = true;
 			
@@ -59,29 +62,43 @@ public class Game {
 				turns.rollDice();
 				
 				for(int winningPlayersChecked = 0; winningPlayersChecked < tieNumber; winningPlayersChecked++){
-				
+					
+					System.out.println(tieWinners.get(winningPlayersChecked).getName());
+					
 					for(int numOfPairs = 0; numOfPairs < 3; numOfPairs++){
 						newRoll += tieWinners.get(winningPlayersChecked).getDicePairs()[numOfPairs].getSum();
 					}
 					
+					System.out.println("" + newRoll);
+					
 					if(newRoll == highestRoll){
 						newTieWinners.add(tieWinners.get(winningPlayersChecked));
-						newTieNumber += 1; 
+						newTieNumber = 1; 
 					}
+					
 					else if(newRoll > highestRoll){
+						
 						winner = tieWinners.get(winningPlayersChecked);
 						newTieWinners.removeAll(newTieWinners);
+						
+						highestRoll = newRoll;
 						newTieNumber = 0;
 					}
 					
+					newRoll = 0;
 				}
 				
 				if(newTieNumber == 0){
 					winnerUndecided = false;
 				}
 				else{
-					tieNumber = newTieNumber;
-					tieWinners = newTieWinners;
+					newTieWinners.add(winner);
+					tieWinners = new ArrayList <Player> (); 
+					tieWinners.addAll(newTieWinners);
+					
+					tieNumber = newTieWinners.size();
+					highestRoll = 0;
+					newRoll = 0;
 				}
 				
 			}	
