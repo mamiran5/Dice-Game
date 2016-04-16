@@ -1,31 +1,81 @@
 package diceGame;
 import java.util.*;
 
+/**public class Round
+ * 
+ * This class governs the basic actions that are undertaken within a particular round. It consists of a main
+ * driver class, playRound() which calls the other methods of this class in the order that they are needed. 
+ * Each step is documented to show the exact action that it represents. This class also stores the round number and 
+ * the list of players that will be playing in this round. 
+ * 
+ * @author mfraiz
+ *
+ */
 public class Round 
 {
+	//The order this round will be called in a particular turn
+	//0 ---->  First Round
+	//1 ---->  Second Round
+	//2 ---->  Third Round
 	private int currentRoundNumber = 0;
-	private ArrayList<Player> playerList = null;
 	
+	//ArrayList of players participating in this round. 
+	private ArrayList<Player> playerList;
+	
+	//Test mode is on, this triggers certain methods that are useful for debugging and testing but will 
+	//not be needed later on, particular when the GUI is finished.
 	private boolean testModeOn = true;
 	
+	
+	/**Round(int roundNumber, ArrayList<Player> aList)
+	 * 
+	 * Constructor for the Round class. This allows you to create a round object while specifying the order it will 
+	 * execute and the list of players that will be participating in the round.
+	 * 
+	 * @param roundNumber	This int specifies which round it is. 
+	 * @param aList			Player List of player objects representing players playing this round
+	 */
 	public Round(int roundNumber, ArrayList<Player> aList)
 	{
 		currentRoundNumber = roundNumber;
 		playerList = aList;
 	}
 	
-	/**Compare everyone's dice in order to determine a winner.
+	/**public void playRound()
+	 * Driver Method that contains call to all the modules needed to conduct the actions of one round in the order 
+	 * that they need to be called. Refer to JavaDocs for individual methods to see what action is done in each
+	 * particular step.
 	 * 
 	 */
 	public void playRound()
 	{
 		
 		
-		//Test Rolls
-		
+		//Print out the stored roles for this round to show them to the user.
 		testPrintCurrentRoundRolls(playerList);
 		
-		//Determine Winner for the Round:
+		//TO-DO execute selected special moves here before a winner for the round is selected.
+		//This will be added for the third Sprint. 
+		
+		//Determine Winner for the Round based on selected rolls.
+		Player aWinner = determineRoundWinner();
+		
+		//Award Points 
+		awardPoints(aWinner);
+		
+		
+	}
+	
+	/**private Player determineRoundWinner()
+	 * 
+	 * This method decides on who wins a particular round based on the rolls they have compared to the rolls other 
+	 * players have. When done it returns the player object that corresponds to the player who has won the round.
+	 * 
+	 * @return winner	 Player object that is the player who has won this round 
+	 */
+	public Player determineRoundWinner()
+
+	{
 		
 		//Iterator for List
 		Iterator<Player> rollingPlayerIterator = playerList.iterator();
@@ -56,16 +106,41 @@ public class Round
 			
 		}
 		
+		//If the winnerList has more than one player, then its a tie, call the tie breaker.
+		if (winnerList.size() > 1)
+		{
+			
+			winnerList = breakTie(winnerList);
+		}
 		
+		Player winner = winnerList.get(0);
+		System.out.println("The Winner for this round is : " + winnerList.toString());
+		System.out.println("");
+		System.out.println("----------------------------------------");
+		
+		return winner;
+	}
+
+	/**private ArrayList<Player> breakTie(ArrayList<Player> tiePlayers)
+	 * 
+	 * This method is here to break ties when needed. If you give it an ArrayList of tied players, it will reroll
+	 * the dice until only one player remains then return the list containing just this one winning player. 
+	 * 
+	 * @param tiePlayers	A list of at least 2 players. 
+	 * @return 		An ArrayList<Player> Containing the winning player after the rerolls are done. 
+	 */
+	public ArrayList<Player> breakTie(ArrayList<Player> tiePlayers)
+	{
 		Player potentialWinner;
+		int highestRoll = 0;
 		
 		//Tiebreaker!
-		while(winnerList.size() > 1)
+		while(tiePlayers.size() > 1)
 		{
 			System.out.println("Tie Detected!");
 			
 			//Reroll for this round.
-			Iterator<Player> tieBreakIterator = winnerList.iterator();
+			Iterator<Player> tieBreakIterator = tiePlayers.iterator();
 			
 			while(tieBreakIterator.hasNext())
 			{
@@ -83,10 +158,10 @@ public class Round
 				
 			}
 			
-			Iterator<Player> checkWinnerIterator = winnerList.iterator();
+			Iterator<Player> checkWinnerIterator = tiePlayers.iterator();
 			
 			//Reset Winner List
-			winnerList = new ArrayList<Player>();
+			tiePlayers = new ArrayList<Player>();
 			
 			//Clear HighestRoll
 			highestRoll = 0;
@@ -97,54 +172,61 @@ public class Round
 				
 				if(newPlayer.getDicePairs()[currentRoundNumber].getSum() == highestRoll)
 				{
-					winnerList.add(newPlayer);
+					tiePlayers.add(newPlayer);
 				}
 				else if ((newPlayer.getDicePairs()[currentRoundNumber].getSum()> highestRoll))
 				{
 					//Reset List
-					winnerList = new ArrayList<Player>();
+					tiePlayers = new ArrayList<Player>();
 					
 					//Assign New Highscore + Winner
 					highestRoll = newPlayer.getDicePairs()[currentRoundNumber].getSum();
-					winnerList.add(newPlayer);
+					tiePlayers.add(newPlayer);
 				}
 			}
-			
-			
 		}
 		
+		return tiePlayers;
 		
-		System.out.println("The Winner for this round is : " + winnerList.toString());
-		System.out.println("");
-		System.out.println("----------------------------------------");
-		
-		//
+	}
+
+	/**private void awardPoints(Player pointWinner)
+	 * 
+	 * This method awards a player points for winning the round. 
+	 * 
+	 *  There are different award values based on which round it is in a turn:
+	 *  1st round - 200 points
+	 *  2nd round - 150 points
+	 *  3rd round - 100 points
+	 * 
+	 * @param pointWinner	The player to win points
+	 */
+	public void awardPoints(Player pointWinner)
+	{
 		switch(currentRoundNumber)
 		{
 			
 			case 1:
 				//Award First Round - 200 Points
-				winnerList.get(0).modifyScore(200);
+				pointWinner.modifyScore(200);
 				break;
 				
 			case 2:
 				//Award Second Round - 150 Points
-				winnerList.get(0).modifyScore(150);
+				pointWinner.modifyScore(150);
 				break;
 				
 			case 3:
 				//Award Third Round - 100 Points
-				winnerList.get(0).modifyScore(100);
+				pointWinner.modifyScore(100);
 				break;
 				
 			default:
 				//Throw Exception, Invalid Round Number
-				break:
+				break;
 		}
-		
-		
 	}
-	
+
 	/**Helper function that prints out everyone's score for the current Round.
 	 * 
 	 * @param listOfPlayers
