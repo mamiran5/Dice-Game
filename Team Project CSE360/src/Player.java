@@ -1,7 +1,7 @@
 package diceGame;
-/** Player is a class that will hold a player's name, dice pairs, and current score. It has four methods, setName, setScore, getName, and getScore
+/** Player is a class that will hold a player's name, dice pairs, and current score. It has multiple methods to access and set the private variables.
  * @author Manuel Aguirre
- * @version April 6, 2016.
+ * @version April 14, 2016.
 */
 public class Player
 {
@@ -12,6 +12,12 @@ public class Player
 		/** score is an int that holds the player's current score. */
 		private int score;
 
+		/** Player constructor allows the user to set the player's name and scores when the Player object is being created
+		 * 
+		 * @param inName			inName is the name that the user wants to give the player
+		 * @param inScore			inScore is the score that the user wants to give the player
+		 */
+		
 		public Player(String inName, int inScore){
 			name = inName;
 			score = inScore;
@@ -26,10 +32,22 @@ public class Player
 			score = inScore;
 		}
 		
+		/** modifyScore will add or subtract from the player's score as needed
+		*
+		*@param modScore			modScore is the amount that the player's score will be modified(10 for add 10, -10 for subtract 10, etc.)
+		*/
+		
 		public void modifyScore (int modScore)
 		{
 			score += modScore;
 		}
+		
+		/** setDicePairs will set the contents of the pairs array to the inputed DicePair objects
+		*
+		*@param first				first is the first DicePair that will be in the array
+		*@param second				second is the second DicePair that will be in the array
+		*@param third				third is the third DicePair that will be in the array
+		*/
 		
 		public void setDicePairs(DicePair first, DicePair second, DicePair third){
 			pairs[0] = first;
@@ -47,11 +65,6 @@ public class Player
 			return name;
 		}
 
-		/** getScore will return the player's current score
-		*
-		*@return score				score is the player's current score
-		*/
-
 		/**public int getDiceForRound(int roundNumber) 
 		 * 
 		 * returns the sum of the player's rolls for the round indicated.
@@ -65,15 +78,30 @@ public class Player
 			return pairRollValue;
 		}
 		
+		/** getScore will return the player's current score
+		*
+		*@return score				score is the player's current score
+		*/	
+		
 		public int getScore(){
 			return score;
 		}
+		
+		/** getDicePairs will return the array that holds the player's DicePairs
+		*
+		*@return pairs				pairs is the array that holds the player's DicePairs
+		*/
+		
 		public DicePair[] getDicePairs()
 		{
 			return pairs;
 		}
 		
-		//Added toString Method
+		/** toString will return the player's name
+		 * 
+		 *@return name				name is the name of the player
+		 */
+		
 		public String toString()
 		{
 			return name;
