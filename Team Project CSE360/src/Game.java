@@ -1,4 +1,8 @@
 package diceGame;
+/** Game is the driver of the 
+ * @author Michael Saul
+ * @version April 15, 2016.
+*/
 import java.util.*;
 
 public class Game {
@@ -16,44 +20,52 @@ public class Game {
 		
 		String playerName;
 		
+		in.nextLine();
+		
+		//Adds all the players to an array
 		for(int playersAdded = 0; playersAdded < playerNum; playersAdded++){
 			System.out.println("Please enter a player name!");
-			playerName = in.next();
+			playerName = in.nextLine();
 			playerList[playersAdded] = new Player(playerName, 500);
 		}
 		
 		Turn turns = new Turn(playerList);
 		
+		//Plays the number of turns that the player specified earlier
 		for(int turnCount = 0; turnCount < turnTotal; turnCount++){
 			turns.startTurn();
 		}
 		
 		Player winner = playerList[0];
-		ArrayList <Player> tieWinners = new ArrayList <Player >();
-		int tieNumber = 0;
+		ArrayList <Player> winners = new ArrayList <Player>();
 		
+		//Determines who has the highest score and sets that peson as the winner, unless there is a tie in which case an array is created containing those who have the same highest score
 		for(int playersChecked = 1; playersChecked < playerNum; playersChecked++){
 			int highScore = winner.getScore();
 			int newScore = playerList[playersChecked].getScore();
 			
 			if(newScore == highScore){
-				tieWinners.add(playerList[playersChecked]);
-				tieNumber += 1;
+				winners.add(playerList[playersChecked]);
 			}
+			
 			else if(newScore > highScore){
 				winner = playerList[playersChecked];
-				tieWinners.removeAll(tieWinners);
-				tieNumber = 0;
+				winners.removeAll(winners);
+				winners.add(winner);
 			}
+			
 		}
 		
-		if(tieNumber != 0){
-			tieWinners.add(winner);
-			tieNumber = tieWinners.size();
+		//Determines the winner of the game in the event of a tie when comparing each player's score. Each player that tied rolls all their dice and adds up the sum of the dice rolls.
+		//Whichever player has the highest sum of the die will win the game, unless some players tie with the largest dice roll sum in which case they roll again and repeat this process until one player is victorious.
+		if(winners.size() != 1){
+			System.out.println("Not everyone can be a Winner! It's time for a tie breaker! \n");
+			
+			int tieNumber = winners.size();
 			
 			int highestRoll = 0;
 			int newRoll = 0;
-			ArrayList <Player> newTieWinners = new ArrayList <Player> ();
+			ArrayList <Player> newWinners = new ArrayList <Player> ();
 			int newTieNumber = 0;
 			boolean winnerUndecided = true;
 			
@@ -63,23 +75,24 @@ public class Game {
 				
 				for(int winningPlayersChecked = 0; winningPlayersChecked < tieNumber; winningPlayersChecked++){
 					
-					System.out.println(tieWinners.get(winningPlayersChecked).getName());
 					
 					for(int numOfPairs = 0; numOfPairs < 3; numOfPairs++){
-						newRoll += tieWinners.get(winningPlayersChecked).getDicePairs()[numOfPairs].getSum();
+						newRoll += winners.get(winningPlayersChecked).getDicePairs()[numOfPairs].getSum();
 					}
 					
-					System.out.println("" + newRoll);
+					System.out.println("Player " + (winningPlayersChecked + 1) + " : " + 
+					winners.get(winningPlayersChecked).getName() +" rolled a : " + newRoll);
 					
 					if(newRoll == highestRoll){
-						newTieWinners.add(tieWinners.get(winningPlayersChecked));
+						newWinners.add(winners.get(winningPlayersChecked));
 						newTieNumber = 1; 
 					}
 					
 					else if(newRoll > highestRoll){
 						
-						winner = tieWinners.get(winningPlayersChecked);
-						newTieWinners.removeAll(newTieWinners);
+						winner = winners.get(winningPlayersChecked);
+						newWinners.removeAll(winners);
+						newWinners.add(winner);
 						
 						highestRoll = newRoll;
 						newTieNumber = 0;
@@ -90,23 +103,32 @@ public class Game {
 				
 				if(newTieNumber == 0){
 					winnerUndecided = false;
+					System.out.println("");
+					System.out.println("----------------------------------------");
 				}
+				
 				else{
-					newTieWinners.add(winner);
-					tieWinners = new ArrayList <Player> (); 
-					tieWinners.addAll(newTieWinners);
+					winners = new ArrayList <Player> (); 
+					winners.addAll(winners);
 					
-					tieNumber = newTieWinners.size();
+					tieNumber = winners.size();
 					highestRoll = 0;
-					newRoll = 0;
+					System.out.println("");
+					System.out.println("----------------------------------------");
+					System.out.println("Another tie?!? This calls for a tie breaker!");
 				}
 				
 			}	
 			
 		}	
 		
-		System.out.println("The winner is " + winner.getName());
+		for(int playerIndex = 0; playerIndex < playerNum; playerIndex++){
+			System.out.println("Player " + (playerIndex + 1) + " : " + playerList[playerIndex].getName() + " ended with a score of : " + playerList[playerIndex].getScore());
+		}
+		
+		System.out.println("");
+		System.out.println("----------------------------------------");
+		System.out.println("The Winner is : [" + winner.getName() + "]");
 		
 	}
-	
 }
