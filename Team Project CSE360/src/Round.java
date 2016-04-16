@@ -204,8 +204,6 @@ public class Round
 	 */
 	public void awardPoints(Player pointWinner)
 	{
-		
-		System.out.println(pointWinner.getScore());
 		switch(currentRoundNumber)
 		{
 			
@@ -228,8 +226,6 @@ public class Round
 				//Throw Exception, Invalid Round Number
 				break;
 		}
-		
-		System.out.println(pointWinner.getScore());
 	}
 
 	/**Helper function that prints out everyone's score for the current Round.
