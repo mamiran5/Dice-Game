@@ -66,6 +66,7 @@ public class Round
 		
 	}
 	
+
 	/**private Player determineRoundWinner()
 	 * 
 	 * This method decides on who wins a particular round based on the rolls they have compared to the rolls other 
@@ -203,20 +204,22 @@ public class Round
 	 */
 	public void awardPoints(Player pointWinner)
 	{
+		
+		System.out.println(pointWinner.getScore());
 		switch(currentRoundNumber)
 		{
 			
-			case 1:
+			case 0:
 				//Award First Round - 200 Points
 				pointWinner.modifyScore(200);
 				break;
 				
-			case 2:
+			case 1:
 				//Award Second Round - 150 Points
 				pointWinner.modifyScore(150);
 				break;
 				
-			case 3:
+			case 2:
 				//Award Third Round - 100 Points
 				pointWinner.modifyScore(100);
 				break;
@@ -225,6 +228,8 @@ public class Round
 				//Throw Exception, Invalid Round Number
 				break;
 		}
+		
+		System.out.println(pointWinner.getScore());
 	}
 
 	/**Helper function that prints out everyone's score for the current Round.

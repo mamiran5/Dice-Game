@@ -69,13 +69,13 @@ public class Turn
 		
 	}
 
-	/**public void startRounds(ArrayList<Round> aRoundList)
+	/**private void startRounds(ArrayList<Round> aRoundList)
 	 * 
 	 * startRounds method.
 	 * 
 	 * @param aRoundList
 	 */
-	public void startRounds(ArrayList<Round> aRoundList)
+	private void startRounds(ArrayList<Round> aRoundList)
 	{
 		Iterator<Round> roundIterator = aRoundList.iterator();
 		Round currentRound;
