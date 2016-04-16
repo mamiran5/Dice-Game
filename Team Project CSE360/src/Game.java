@@ -1,5 +1,5 @@
 package diceGame;
-/** Game is the driver of the 
+/** Game is the driver
  * @author Michael Saul
  * @version April 15, 2016.
 */
