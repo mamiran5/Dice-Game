@@ -11,6 +11,12 @@ public class Player
 		private DicePair[] pairs = new DicePair[3];
 		/** score is an int that holds the player's current score. */
 		private int score;
+		
+		//for statistics and database purposes
+		private int roundsWon;
+		private int pointsSpent;
+		private int pointsEarned;
+		private int actionsUsed;
 
 		/** Player constructor allows the user to set the player's name and scores when the Player object is being created
 		 * 
