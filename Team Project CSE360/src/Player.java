@@ -21,6 +21,8 @@ public class Player
 		private int pointsEarned;
 		
 		private int actionsUsed;
+		
+		private int wonGame;
 
 		/** Player constructor allows the user to set the player's name and scores when the Player object is being created
 		 * 
@@ -35,6 +37,7 @@ public class Player
 			pointsSpent = 0;
 			pointsEarned = 0;
 			actionsUsed = 0;
+			wonGame = 0;
 		}
 
 		/** setScore will set local variable 'score' to the contents of the parameter inScore
@@ -153,4 +156,7 @@ public class Player
 			return actionsUsed;
 		}
 		
+		public int isWinner(){
+			return wonGame;
+		}
 }
