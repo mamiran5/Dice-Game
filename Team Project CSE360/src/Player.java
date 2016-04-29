@@ -159,4 +159,8 @@ public class Player
 		public int isWinner(){
 			return wonGame;
 		}
+		
+		public void setWinner(){
+			wonGame = 1;
+		}
 }
