@@ -61,11 +61,22 @@ public class Turn
 		//TO-DO Reroll Dice!
 		
 		//Select Ability Phase
-		//Will be implemented in Sprint 3. 
+		createActions();
+		doActions();
 		
 		//Round Compare!
 		System.out.println("Turn Start!");
 		startRounds(roundList);
+		
+	}
+
+	private void createActions() {
+		
+		
+	}
+
+	private void doActions() {
+		
 		
 	}
 
