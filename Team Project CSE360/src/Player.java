@@ -12,6 +12,8 @@ public class Player
 		/** score is an int that holds the player's current score. */
 		private int score;
 		
+		private boolean isSafe = false;
+		
 		//for statistics and database purposes
 				
 		private int roundWins;
@@ -159,8 +161,16 @@ public class Player
 		public int isWinner(){
 			return wonGame;
 		}
-		
 		public void setWinner(){
 			wonGame = 1;
+		}
+		public boolean getSafe(){
+			return isSafe;
+		}
+		public void setSafe(int value){
+			if(value == 1)
+				isSafe = true;
+			if(value == 0)
+				isSafe = false;
 		}
 }
