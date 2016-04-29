@@ -16,8 +16,6 @@ public class Player
 				
 		private int roundWins;
 		
-		private int gamesPlayed;
-		
 		private int pointsSpent;
 		
 		private int pointsEarned;
@@ -34,7 +32,6 @@ public class Player
 			name = inName;
 			score = inScore;
 			roundWins = 0;
-			gamesPlayed = 0;
 			pointsSpent = 0;
 			pointsEarned = 0;
 			actionsUsed = 0;
