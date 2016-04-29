@@ -15,6 +15,7 @@ public class DicePair
 	
 	private Dice dice2;
 	
+	private int modifier = 0;
 	/**
 	 * Constructor that initializes the object to the two die chosen to be paired by the player, passed in as parameters. 
 	 * 
@@ -36,7 +37,12 @@ public class DicePair
 	{
 		int sum;
 		sum = dice1.getValue() + dice2.getValue();
-		return sum;
+		return sum + modifier;
+	}
+	
+	public void setModifier(int mod)
+	{
+		modifier += mod;
 	}
 	
 	/**
@@ -70,5 +76,12 @@ public class DicePair
 	{
 		dice1 = new Dice(6);
 		dice2 = new Dice(6);
+	}
+
+	public int getDie(int diceIndex) {
+		if(diceIndex==0)
+			return dice1.getValue();
+		else
+			return dice2.getValue();
 	}
 }
