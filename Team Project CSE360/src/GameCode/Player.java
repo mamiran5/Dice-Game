@@ -1,4 +1,7 @@
 package diceGame;
+
+import java.util.ArrayList;
+
 /** Player is a class that will hold a player's name, dice pairs, and current score. It has multiple methods to access and set the private variables.
  * @author Manuel Aguirre
  * @version April 14, 2016.
@@ -9,10 +12,20 @@ public class Player
 		private String name;
 		/** pairs is a dicePair array that holds the player's three dice pairs. */
 		private DicePair[] pairs = new DicePair[3];
+		
+		/**This list stores the six dice that are rolled before they are assigned to dicepairs.
+		 * 
+		 */
+		private ArrayList <Dice> diceList = new ArrayList<Dice>();
+		
+		
 		/** score is an int that holds the player's current score. */
 		private int score;
 		
 		private boolean isSafe = false;
+		
+		//Variable for determining whether the player is computer controlled or player controlled
+		private boolean isAComputer = true;
 		
 		//for statistics and database purposes
 				
@@ -51,6 +64,20 @@ public class Player
 			score = inScore;
 		}
 		
+		/**
+		 * 
+		 * @return isAComputer() 	Returns TRUE if player is a computer, Returns FALSE if player is a human person.
+		 */
+		public boolean isAComputer()
+		{
+			return isAComputer;
+		}
+		
+		public void setIsItAComputer(boolean isItAComputer)
+		{
+			isAComputer = isItAComputer;
+		}
+		
 		/** modifyScore will add or subtract from the player's score as needed
 		*
 		*@param modScore			modScore is the amount that the player's score will be modified(10 for add 10, -10 for subtract 10, etc.)
@@ -73,7 +100,35 @@ public class Player
 			pairs[1] = second;
 			pairs[2] = third;				
 		}
-
+		
+		/** Set Dice List
+		 * 
+		 */
+		public void setDiceList( Dice[] rolledDice )
+		{
+			//First Clear diceList
+			
+			diceList = new ArrayList<Dice>();
+			
+			//Assign the dice in the parameter list to the list of dice owned by the player. 
+			for (int diceCount = 0; diceCount<rolledDice.length; diceCount++ )
+			{
+				diceList.add(rolledDice[diceCount]);
+			}
+			
+		}
+		
+		/** getDiceList()
+		 * 
+		 * 
+		 * @return the player's dice list
+		 */
+		public ArrayList<Dice> getDiceList()
+		{
+			return diceList;
+		}
+		
+		
 		/** getName will return the name of the player
 		*
 		*@return name				name is the name of the player

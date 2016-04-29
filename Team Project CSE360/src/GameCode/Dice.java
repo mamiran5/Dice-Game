@@ -65,5 +65,10 @@ public class Dice
 	{
 		return value;
 	}
+	
+	public String toString()
+	{
+		return  "" + value ;
+	}
 
 }
