@@ -72,8 +72,42 @@ public class TestTurn
 		assertTrue(playerList.get(2).getDiceForRound(0) <= 12 );
 		assertTrue(playerList.get(2).getDiceForRound(1) <= 12 );
 		assertTrue(playerList.get(2).getDiceForRound(2) <= 12 );
+	}
 	
+	@Test
+	public void testPlayerRollDice()
+	{
+		ArrayList<Player> playerList = new ArrayList<Player>();
+		playerList.add(new Player("Bob", 500));
+		playerList.add(new Player("Sue", 500));
+		playerList.add(new Player("Paul", 500));
+		playerList.add(new Player("Laura", 500));
 		
+		//Set them as all players.
+		playerList.get(0).setIsItAComputer(false);
+		playerList.get(1).setIsItAComputer(false);
+		playerList.get(2).setIsItAComputer(false);
+		playerList.get(3).setIsItAComputer(false);
+		
+		Turn nextTurn = new Turn(playerList);
+		
+		//Have the players Roll the dice
+		nextTurn.rollDice();
+		
+		
+		System.out.println("Test Original Rolls");
+		System.out.println(playerList.get(0).getDiceList().toString());
+		System.out.println(playerList.get(1).getDiceList().toString());
+		System.out.println(playerList.get(2).getDiceList().toString());
+		System.out.println(playerList.get(3).getDiceList().toString());
+		
+		nextTurn.reRollPhase();
+		
+		System.out.println("Test Re-Rolls");
+		System.out.println(playerList.get(0).getDiceList().toString());
+		System.out.println(playerList.get(1).getDiceList().toString());
+		System.out.println(playerList.get(2).getDiceList().toString());
+		System.out.println(playerList.get(3).getDiceList().toString());
 	}
 	
 }
