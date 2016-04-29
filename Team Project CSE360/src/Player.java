@@ -13,9 +13,15 @@ public class Player
 		private int score;
 		
 		//for statistics and database purposes
-		private int roundsWon;
+				
+		private int roundWins;
+		
+		private int gamesPlayed;
+		
 		private int pointsSpent;
+		
 		private int pointsEarned;
+		
 		private int actionsUsed;
 
 		/** Player constructor allows the user to set the player's name and scores when the Player object is being created
@@ -27,6 +33,11 @@ public class Player
 		public Player(String inName, int inScore){
 			name = inName;
 			score = inScore;
+			roundWins = 0;
+			gamesPlayed = 0;
+			pointsSpent = 0;
+			pointsEarned = 0;
+			actionsUsed = 0;
 		}
 
 		/** setScore will set local variable 'score' to the contents of the parameter inScore
@@ -111,6 +122,38 @@ public class Player
 		public String toString()
 		{
 			return name;
+		}
+		
+		public void roundWinsIncreased(){
+			roundWins += 1;
+		}
+		
+		public int getRoundWins(){
+			return roundWins;
+		}
+		
+		public void pointsSpentIncreased(int actionCost){
+			pointsSpent += actionCost;
+		}
+		
+		public int getPointsSpent(){
+			return pointsSpent;
+		}
+		
+		public void pointsEarnedIncreased(int roundValue){
+			pointsEarned += roundValue;
+		}
+		
+		public int getPointsEarned(){
+			return pointsEarned;
+		}
+		
+		public void actionsUsedIncreased(){
+			actionsUsed += 1;
+		}
+		
+		public int getActionsUsed(){
+			return actionsUsed;
 		}
 		
 }
