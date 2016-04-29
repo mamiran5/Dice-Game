@@ -1,4 +1,5 @@
 package diceGame;
+import java.io.IOException;
 /** Game is the driver
  * @author Michael Saul
  * @version April 15, 2016.
@@ -7,7 +8,7 @@ import java.util.*;
 
 public class Game {
 	
-	public static void main (String [] args){
+	public static void main (String [] args) throws IOException{
 		Scanner in = new Scanner(System.in);
 		
 		System.out.println("Please enter the number of turns you wish to play!");
@@ -130,5 +131,13 @@ public class Game {
 		System.out.println("----------------------------------------");
 		System.out.println("The Winner is : [" + winner.getName() + "]");
 		
+		in.close();
+		
+		winner.setWinner();
+		GameStats stats = new GameStats();
+		stats.updateHistory(playerList);
+		stats.printHistory();
+		
 	}
+
 }
