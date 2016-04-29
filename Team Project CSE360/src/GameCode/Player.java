@@ -3,6 +3,7 @@ package diceGame;
 import java.util.ArrayList;
 
 /** Player is a class that will hold a player's name, dice pairs, and current score. It has multiple methods to access and set the private variables.
+ * 
  * @author Manuel Aguirre
  * @version April 14, 2016.
 */
@@ -22,6 +23,7 @@ public class Player
 		/** score is an int that holds the player's current score. */
 		private int score;
 		
+		/** will determine if the player is safe from other player's actions*/
 		private boolean isSafe = false;
 		
 		//Variable for determining whether the player is computer controlled or player controlled
@@ -29,15 +31,15 @@ public class Player
 		
 		//for statistics and database purposes
 				
-		private int roundWins;
+		private int roundWins; //amount of rounds the player has won
 		
-		private int pointsSpent;
+		private int pointsSpent; //amount of points the player has spent
 		
-		private int pointsEarned;
+		private int pointsEarned; //amount of points the player has earned
 		
-		private int actionsUsed;
+		private int actionsUsed; //amount of actions the player has used
 		
-		private int wonGame;
+		private int wonGame; //will show if the player won the game or not
 
 		/** Player constructor allows the user to set the player's name and scores when the Player object is being created
 		 * 
@@ -68,11 +70,16 @@ public class Player
 		 * 
 		 * @return isAComputer() 	Returns TRUE if player is a computer, Returns FALSE if player is a human person.
 		 */
+		
 		public boolean isAComputer()
 		{
 			return isAComputer;
 		}
 		
+		/**
+		 * 
+		 * @param isItAComputer		will let the game know if the player is a computer or not
+		 */
 		public void setIsItAComputer(boolean isItAComputer)
 		{
 			isAComputer = isItAComputer;
@@ -181,47 +188,95 @@ public class Player
 			return name;
 		}
 		
+		/** Will increase the value of roundWins everytime the player wins a round
+		 * 
+		 */
 		public void roundWinsIncreased(){
 			roundWins += 1;
 		}
 		
+		/** Will return the amount of rounds the player won
+		 * 
+		 * @return roundWins		roundWins is the total number of rounds the player has won
+		 */
 		public int getRoundWins(){
 			return roundWins;
 		}
 		
+		/**Will keep track of the amount of points the player has spent
+		 * 
+		 * @param actionCost		the amount of points the player spent on an action
+		 */
 		public void pointsSpentIncreased(int actionCost){
 			pointsSpent += actionCost;
 		}
 		
+		/** Will return the amount of points spent during the game
+		 * 
+		 * @return pointsSpent		the amount of points the player has spent throughout the game
+		 */
 		public int getPointsSpent(){
 			return pointsSpent;
 		}
 		
+		/** Will increase the value of pointsEarned by the amount of the parameter
+		 * 
+		 * @param roundValue		the amount of points the player earned in the round
+		 */
 		public void pointsEarnedIncreased(int roundValue){
 			pointsEarned += roundValue;
 		}
 		
+		/** Will return the value of pointsEarned 
+		 * 
+		 * @return pointsEarned		the amount of points the player earned throughout the game
+		 */
 		public int getPointsEarned(){
 			return pointsEarned;
 		}
 		
+		/** Will increment actionsUsed every time the player uses an action
+		 * 
+		 */
 		public void actionsUsedIncreased(){
 			actionsUsed += 1;
 		}
 		
+		/** Will return the amount of actions the player used throughout the game
+		 * 
+		 * @return actionsUsed		the amount of actions the player used throughout the game
+		 */
 		public int getActionsUsed(){
 			return actionsUsed;
 		}
 		
+		/** Will return the value of wonGame which will show if the player is the winner of the game or not
+		 * 
+		 * @return wonGame			will be 1 if the player won the game
+		 */
 		public int isWinner(){
 			return wonGame;
 		}
+		
+		/** Will set the value of wonGame to 1 if the player won the game
+		 * 
+		 */
 		public void setWinner(){
 			wonGame = 1;
 		}
+		
+		/** Will return the value of isSafe
+		 * 
+		 * @return isSafe			will show if the player is safe from actions or not
+		 */
 		public boolean getSafe(){
 			return isSafe;
 		}
+		
+		/** Will decide if the player is safe from actions 
+		 * 
+		 * @param value				will be 1 if the player is safe from actions and 0 if not
+		 */
 		public void setSafe(int value){
 			if(value == 1)
 				isSafe = true;
