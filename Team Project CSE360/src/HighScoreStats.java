@@ -5,12 +5,10 @@ import java.util.*;
 
 public class HighScoreStats {
 	
-	private BufferedReader reader;
 	private PrintWriter writer;
 	Scanner scan = new Scanner("masterfile.txt");
 	
 	public HighScoreStats(Player [] playerList) throws FileNotFoundException{
-		reader = new BufferedReader(new FileReader("masterfile.txt"));
 		writer = new PrintWriter("masterfile.txt");
 	}
 	
@@ -18,15 +16,13 @@ public class HighScoreStats {
 		if(!scan.hasNextLine()){
 			
 			for(int playerIndex = 0; playerIndex < playerList.length; playerIndex++){
-				writer.write(playerList[playerIndex].getName());
+				writer.write(playerList[playerIndex].getName() + "\n");
 			}
-			
 			scan.close();
 			
 		}
 		
 		else{
-			String newFileInput = "";
 			for(int playerIndex = 0; playerIndex < playerList.length; playerIndex++){
 				
 				boolean newPlayer = true;
@@ -34,7 +30,7 @@ public class HighScoreStats {
 				
 				while(scan.hasNextLine()){
 				
-					String check = reader.readLine();
+					String check = scan.nextLine();
 					
 					if(check.equals(playerList[playerIndex].getName())){
 						updatePlayerFile(playerList[playerIndex]);
@@ -55,28 +51,75 @@ public class HighScoreStats {
 		
 	}
 	
-	public void rankings(Player [] players){
+	public void rankings() throws FileNotFoundException{
+		Scanner masterScan = new Scanner("masterfile.txt");
+		PrintWriter rankingWriter = new PrintWriter("ranking.txt");
+		
+		int counter = 0;
+		
+		while(masterScan.hasNextLine()){
+			counter += 1;
+		}
+		
+		masterScan.close();
+		
+		masterScan = new Scanner("masterfile.txt");
+		
+		Comparator<String> comparator = new PlayerStatsComparator();
+	    PriorityQueue<String> queue = new PriorityQueue<String>(counter, comparator);
+		
+		while(masterScan.hasNextLine()){
+			String name = masterScan.nextLine();
+			Scanner scan = new Scanner(name + ".txt");
+			
+			for(int lineNumber = 0; lineNumber < 3; lineNumber++){
+				scan.nextLine();
+			}
+			
+			String gamesPlayed = scan.nextLine().substring(15);
+			scan.nextLine(); //skip over Games Won
+			String gameRatio = scan.nextLine().substring(12);
+			String compareInfo = gameRatio + " " + gamesPlayed + " " + name + ".txt";
+			
+			queue.add(compareInfo);
+			
+			scan.close();
+			
+		}
+		
+		rankingWriter.println("Name RoundsWon HighestScore GamesPlayed GamesWon	GameWin/LossPercentage PointsSpent PointsEarned	ActionsUsed");
+		
+		
+		masterScan.close();
+		
+		while(!queue.isEmpty()){
+			String playerFile = queue.remove().split(" ", 3)[2];
+			Scanner playerScan = new Scanner(playerFile);
+			
+			
+		}
 		
 	}
 	
 	public void createPlayerFile(Player playerInfo) throws FileNotFoundException{
 		PrintWriter writer = new PrintWriter(playerInfo.getName() + ".txt");
-		String player = playerInfo.getName() + 
-				"\nRounds Won: " + playerInfo.getRoundWins() +
-				"\nHighest Score: " + playerInfo.getScore() + 
-				"\nGames Played: 1" + 
-				"\nGames Won: " + playerInfo.isWinner() + 
-				"\nGame Win/Loss Percentage: 0.0" +
-				"\nPoints Spent: " + playerInfo.getPointsSpent() + 
-				"\nPoints Earned: " + playerInfo.getPointsEarned() + 
-				"\nActions Used: " + playerInfo.getActionsUsed();
-		writer.write(player);
+	    
+		writer.println(playerInfo.getName());
+		writer.println("Rounds Won: " + playerInfo.getRoundWins());
+		writer.println("Highest Score: " + playerInfo.getScore());
+		writer.println("Games Played: 1"); 
+		writer.println("Games Won: " + playerInfo.isWinner());
+		writer.println("Game Win/Loss Percentage: " + playerInfo.isWinner() * 100);
+		writer.println("Points Spent: " + playerInfo.getPointsSpent());
+		writer.println("Points Earned: " + playerInfo.getPointsEarned());
+		writer.println("Actions Used: " + playerInfo.getActionsUsed());
+		
 		writer.close();
 	}
 	
 	public void updatePlayerFile(Player playerInfo) throws FileNotFoundException{
 		Scanner scan = new Scanner(playerInfo.getName() + ".txt");
-		PrintWriter writer = new PrintWriter(playerInfo.getName() + ".txt");
+		PrintWriter playerWriter = new PrintWriter(playerInfo.getName() + ".txt");
 		
 		scan.nextLine();
 		
@@ -98,8 +141,8 @@ public class HighScoreStats {
 		int pastGamesWon = Integer.parseInt(scan.nextLine().substring(12));
 		pastGamesWon += winner;
 		
-		double WinRatio = Double.parseDouble(scan.nextLine().substring(27));
-		WinRatio = ((double)pastGamesWon)/pastGamesPlayed;
+		double winRatio = Double.parseDouble(scan.nextLine().substring(27));
+		winRatio = ((double)pastGamesWon)/pastGamesPlayed*100;
 		
 		int pointsSpent = playerInfo.getPointsSpent();
 		int pastPointsSpent = Integer.parseInt(scan.nextLine().substring(15));
@@ -113,21 +156,17 @@ public class HighScoreStats {
 		int pastActionsUsed = Integer.parseInt(scan.nextLine().substring(15));
 		pastActionsUsed += actionsUsed;
 		
-		String player = "";
+		playerWriter.println(playerInfo.getName());
+		playerWriter.println("Rounds Won: " + savedRoundWins);
+		playerWriter.println("Highest Score: " + highestScore);
+		playerWriter.println("Games Played: " + pastGamesPlayed); 
+		playerWriter.println("Games Won: " + pastGamesWon);
+		playerWriter.println("Game Win/Loss Percentage: " + winRatio);
+		playerWriter.println("Points Spent: " + pastPointsSpent);
+		playerWriter.println("Points Earned: " + pastPointsEarned);
+		playerWriter.println("Actions Used: " + pastActionsUsed);
 		
-		player = playerInfo.getName() + 
-				"\nRounds Won: " + savedRoundWins +
-				"\nHighest Score: " + highestScore + 
-				"\nGames Played: " + pastGamesPlayed + 
-				"\nGames Won: " + pastGamesWon +
-				"\nGame Win/Loss Percentage: " + WinRatio +
-				"\nPoints Spent: " + pastPointsSpent + 
-				"\nPoints Earned: " + pastPointsEarned + 
-				"\nActions Used: " + pastActionsUsed;
-		
-		writer.print("");
-		writer.print(player);
-		
+		playerWriter.close();
 		scan.close();
 	}
 	
