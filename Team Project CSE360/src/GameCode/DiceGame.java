@@ -1,4 +1,4 @@
-package cse360proj1;
+package diceGame;
 
 import java.awt.EventQueue;
 
@@ -43,6 +43,10 @@ public class DiceGame{
 	//private int beginPanelIndex;
 	//private boolean beginPanelCheck = true;
 
+	//Set up Driver
+	GameDriver gameDriver = new GameDriver();
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -106,7 +110,7 @@ public class DiceGame{
 		instructionLabel.setBounds(148, 292, 404, 42);
 		welcomePanel.add(instructionLabel);
 		
-		JLabel tooLittleErrorLabel = new JLabel("Game must have at least 2 players!");
+		JLabel tooLittleErrorLabel = new JLabel("Game must have at least 1 player!");
 		tooLittleErrorLabel.setForeground(Color.RED);
 		tooLittleErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		tooLittleErrorLabel.setBounds(406, 361, 264, 27);
@@ -292,10 +296,10 @@ public class DiceGame{
 		die6ImageLabel.setBounds(469, 164, 125, 113);
 		rollDicePanel.add(die6ImageLabel);
 		
-		JButton btnReroll = new JButton("Re-Roll");
-		btnReroll.setFont(new Font("Tahoma", Font.PLAIN, 38));
-		btnReroll.setBounds(373, 290, 348, 100);
-		rollDicePanel.add(btnReroll);
+		JButton rerollDiceButton = new JButton("Re-Roll");
+		rerollDiceButton.setFont(new Font("Tahoma", Font.PLAIN, 38));
+		rerollDiceButton.setBounds(373, 290, 348, 100);
+		rollDicePanel.add(rerollDiceButton);
 
 		// end the roll dice panel
 		
@@ -616,11 +620,14 @@ public class DiceGame{
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if(gameSize >= 2)
+				if(gameSize >= 1)
 				{
 					//tooLittleErrorLabel.setVisible(false);
 					turn1Panel.setVisible(true);
 					welcomePanel.setVisible(false);
+					
+					//Fill up with computers. 
+					gameDriver.addComputerPlayers();
 				}
 				else
 				{
@@ -639,6 +646,12 @@ public class DiceGame{
 			{
 				rollDicePanel.setVisible(true);
 				turn1Panel.setVisible(false);
+				
+				//Start Turn!
+				gameDriver.startATurn();
+				rerollDiceButton.setEnabled(false);
+				nextButton.setEnabled(false);
+								
 			}
 		});	
 		
@@ -663,22 +676,36 @@ public class DiceGame{
 						player1NameLabel.setText(playerNameTF.getText());
 						player1Label.setVisible(true);
 						player1NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
 					}
 					if(gameSize == 2)
 					{
 						player2NameLabel.setText(playerNameTF.getText());
 						player2Label.setVisible(true);
 						player2NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
+						
 					}if(gameSize == 3)
 					{
 						player3NameLabel.setText(playerNameTF.getText());
 						player3Label.setVisible(true);
 						player3NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
+						
 					}if(gameSize == 4)
 					{
 						player4NameLabel.setText(playerNameTF.getText());
 						player4Label.setVisible(true);
 						player4NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
 					}
 					
 					playerNameTF.setText("");
@@ -692,8 +719,44 @@ public class DiceGame{
 		
 		// end begin panel actions
 		
+		rollDiceButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				
+				gameDriver.startRolls();
+				rollDiceButton.setEnabled(false);
+				//Change Labels
+				die1ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 0));
+				die2ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 1));
+				die3ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 2));
+				die4ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 3));
+				die5ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 4));
+				die6ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 5));
+
+				rerollDiceButton.setEnabled(true);
+				nextButton.setEnabled(true);
+			}
+		});		
 		
-		
+		rerollDiceButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				
+				gameDriver.startRolls();
+				//Change Labels
+				die1ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 0));
+				die2ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 1));
+				die3ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 2));
+				die4ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 3));
+				die5ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 4));
+				die6ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 5));
+				
+				rerollDiceButton.setEnabled(false);
+				
+			}
+		});		
 		// begin pair dice panel actions
 		
 		pairButton.addActionListener(new ActionListener()

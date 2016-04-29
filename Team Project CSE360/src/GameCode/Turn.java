@@ -186,6 +186,8 @@ public class Turn
 			}
 		}
 		
+		//Done with kb, close it. 
+		keyboard.close();
 	}
 	
 	public void reRollDice(Player aPlayer)
