@@ -1,4 +1,4 @@
-package diceGame;
+package cse360proj1;
 
 import java.awt.EventQueue;
 
@@ -25,7 +25,7 @@ import java.awt.Scrollbar;
 
 public class DiceGame{
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField playerNameTF;
 	private JTextField pairDiceOne1;
 	private JTextField pairDiceTwo1;
@@ -37,15 +37,13 @@ public class DiceGame{
 	private JTextField attackPlayerTF2;
 	private JTextField attackPlayerTF3;
 	private int gameSize = 0;
+	private int playerTurn = 0;
 	//private boolean twoPlayers;
 	//private boolean threePlayers;
 	//private boolean fourPlayers;
 	//private int beginPanelIndex;
 	//private boolean beginPanelCheck = true;
-
-	//Set up Driver
 	GameDriver gameDriver = new GameDriver();
-	
 	
 	/**
 	 * Launch the application.
@@ -110,7 +108,7 @@ public class DiceGame{
 		instructionLabel.setBounds(148, 292, 404, 42);
 		welcomePanel.add(instructionLabel);
 		
-		JLabel tooLittleErrorLabel = new JLabel("Game must have at least 1 player!");
+		JLabel tooLittleErrorLabel = new JLabel("Game must have at least 2 players!");
 		tooLittleErrorLabel.setForeground(Color.RED);
 		tooLittleErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		tooLittleErrorLabel.setBounds(406, 361, 264, 27);
@@ -268,32 +266,32 @@ public class DiceGame{
 		
 		JLabel die1ImageLabel = new JLabel("Die 1");
 		die1ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die1ImageLabel.setBounds(70, 13, 125, 113);
+		die1ImageLabel.setBounds(12, 13, 125, 113);
 		rollDicePanel.add(die1ImageLabel);
 		
 		JLabel die2ImageLabel = new JLabel("Die 2");
 		die2ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die2ImageLabel.setBounds(273, 13, 125, 113);
+		die2ImageLabel.setBounds(149, 13, 125, 113);
 		rollDicePanel.add(die2ImageLabel);
 		
 		JLabel die3ImageLabel = new JLabel("Die 3");
 		die3ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die3ImageLabel.setBounds(469, 13, 125, 113);
+		die3ImageLabel.setBounds(286, 13, 125, 113);
 		rollDicePanel.add(die3ImageLabel);
 		
 		JLabel die4ImageLabel = new JLabel("Die 4");
 		die4ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die4ImageLabel.setBounds(70, 164, 125, 113);
+		die4ImageLabel.setBounds(0, 164, 125, 113);
 		rollDicePanel.add(die4ImageLabel);
 		
 		JLabel die5ImageLabel = new JLabel("Die 5");
 		die5ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die5ImageLabel.setBounds(273, 164, 125, 113);
+		die5ImageLabel.setBounds(149, 164, 125, 113);
 		rollDicePanel.add(die5ImageLabel);
 		
 		JLabel die6ImageLabel = new JLabel("Die 6");
 		die6ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die6ImageLabel.setBounds(469, 164, 125, 113);
+		die6ImageLabel.setBounds(286, 164, 125, 113);
 		rollDicePanel.add(die6ImageLabel);
 		
 		JButton rerollDiceButton = new JButton("Re-Roll");
@@ -374,10 +372,11 @@ public class DiceGame{
 		pairButton.setBounds(12, 349, 195, 63);
 		pairDicePanel.add(pairButton);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel.setBounds(405, 83, 56, 16);
-		pairDicePanel.add(lblNewLabel);
+		JLabel diceToPairLabel = new JLabel("Dice to pair:");
+		diceToPairLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		diceToPairLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		diceToPairLabel.setBounds(405, 83, 141, 22);
+		pairDicePanel.add(diceToPairLabel);
 		
 		JLabel dicePairError1Label = new JLabel("Check your dice pairs!");
 		dicePairError1Label.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -620,14 +619,11 @@ public class DiceGame{
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if(gameSize >= 1)
+				if(gameSize >= 2)
 				{
 					//tooLittleErrorLabel.setVisible(false);
 					turn1Panel.setVisible(true);
 					welcomePanel.setVisible(false);
-					
-					//Fill up with computers. 
-					gameDriver.addComputerPlayers();
 				}
 				else
 				{
@@ -646,12 +642,6 @@ public class DiceGame{
 			{
 				rollDicePanel.setVisible(true);
 				turn1Panel.setVisible(false);
-				
-				//Start Turn!
-				gameDriver.startATurn();
-				rerollDiceButton.setEnabled(false);
-				nextButton.setEnabled(false);
-								
 			}
 		});	
 		
@@ -676,36 +666,22 @@ public class DiceGame{
 						player1NameLabel.setText(playerNameTF.getText());
 						player1Label.setVisible(true);
 						player1NameLabel.setVisible(true);
-						
-						//Create New Player Object
-						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
 					}
 					if(gameSize == 2)
 					{
 						player2NameLabel.setText(playerNameTF.getText());
 						player2Label.setVisible(true);
 						player2NameLabel.setVisible(true);
-						
-						//Create New Player Object
-						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
-						
 					}if(gameSize == 3)
 					{
 						player3NameLabel.setText(playerNameTF.getText());
 						player3Label.setVisible(true);
 						player3NameLabel.setVisible(true);
-						
-						//Create New Player Object
-						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
-						
 					}if(gameSize == 4)
 					{
 						player4NameLabel.setText(playerNameTF.getText());
 						player4Label.setVisible(true);
 						player4NameLabel.setVisible(true);
-						
-						//Create New Player Object
-						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
 					}
 					
 					playerNameTF.setText("");
@@ -756,69 +732,106 @@ public class DiceGame{
 				rerollDiceButton.setEnabled(false);
 				
 			}
-		});		
+		});
+		
 		// begin pair dice panel actions
 		
 		pairButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if(pairDiceOne1.getText().equals("") || pairDiceTwo1.getText().equals("") || (pairDiceOne1.getText().equals("") && pairDiceTwo1.getText().equals("")))
+				while(playerTurn < gameSize)
 				{
-					blankDicePair1ErrorLabel.setVisible(true);
-				}
-				if(pairDiceOne2.getText().equals("") || pairDiceTwo2.getText().equals("") || (pairDiceOne2.getText().equals("") && pairDiceTwo2.getText().equals("")))
-				{
-					blankDicePair2ErrorLabel.setVisible(true);
-				}
-				if(pairDiceOne3.getText().equals("") || pairDiceTwo3.getText().equals("") || (pairDiceOne3.getText().equals("") && pairDiceTwo3.getText().equals("")))
-				{
-					blankDicePair3ErrorLabel.setVisible(true);
-				}
-				if(pairDiceOne1.getText().equals(pairDiceTwo1.getText()) || 
-				   pairDiceOne1.getText().equals(pairDiceOne2.getText())  ||
-				   pairDiceOne1.getText().equals(pairDiceTwo2.getText())  ||
-				   pairDiceOne1.getText().equals(pairDiceOne3.getText())  ||
-				   pairDiceOne1.getText().equals(pairDiceTwo3.getText()))
-				{
+					if(pairDiceOne1.getText().equals("") || pairDiceTwo1.getText().equals("") || (pairDiceOne1.getText().equals("") && pairDiceTwo1.getText().equals("")))
+					{
+						blankDicePair1ErrorLabel.setVisible(true);
+					}
+					else
+					{
+						blankDicePair1ErrorLabel.setVisible(false);
+					}
+					if(pairDiceOne2.getText().equals("") || pairDiceTwo2.getText().equals("") || (pairDiceOne2.getText().equals("") && pairDiceTwo2.getText().equals("")))
+					{
+						blankDicePair2ErrorLabel.setVisible(true);
+					}	
+					else
+					{
+						blankDicePair2ErrorLabel.setVisible(false);	
+					}	
+					if(pairDiceOne3.getText().equals("") || pairDiceTwo3.getText().equals("") || (pairDiceOne3.getText().equals("") && pairDiceTwo3.getText().equals("")))
+					{
+						blankDicePair3ErrorLabel.setVisible(true);
+					}		
+					else
+					{
+						blankDicePair3ErrorLabel.setVisible(false);	
+					}
+					
+					if(pairDiceOne1.getText().equals(pairDiceTwo1.getText()) || 
+					   pairDiceOne1.getText().equals(pairDiceOne2.getText())  ||
+				       pairDiceOne1.getText().equals(pairDiceTwo2.getText())  ||
+				       pairDiceOne1.getText().equals(pairDiceOne3.getText())  ||
+				       pairDiceOne1.getText().equals(pairDiceTwo3.getText()))
+					{
+						dicePairError1Label.setVisible(true);
+						dicePairError2Label.setVisible(true);	   
+					}
+					else if(pairDiceTwo1.getText().equals(pairDiceOne1.getText()) || 
+							pairDiceTwo1.getText().equals(pairDiceOne2.getText()) ||
+							pairDiceTwo1.getText().equals(pairDiceTwo2.getText()) ||
+							pairDiceTwo1.getText().equals(pairDiceOne3.getText()) ||
+							pairDiceTwo1.getText().equals(pairDiceTwo3.getText()))
+					{
+						dicePairError1Label.setVisible(true);
+					    dicePairError2Label.setVisible(true);	   
+					}
+					else if(pairDiceOne2.getText().equals(pairDiceOne1.getText()) || 
+							pairDiceOne2.getText().equals(pairDiceTwo1.getText()) ||
+							pairDiceOne2.getText().equals(pairDiceTwo2.getText()) ||
+							pairDiceOne2.getText().equals(pairDiceOne3.getText()) ||
+							pairDiceOne2.getText().equals(pairDiceTwo3.getText()))
+					{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceTwo1.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceTwo1.getText().equals(pairDiceOne2.getText()) ||
-				   pairDiceTwo1.getText().equals(pairDiceTwo2.getText()) ||
-				   pairDiceTwo1.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceTwo1.getText().equals(pairDiceTwo3.getText()))
-				{
+					}
+					else if(pairDiceTwo2.getText().equals(pairDiceOne1.getText()) || 
+							pairDiceTwo2.getText().equals(pairDiceTwo1.getText()) ||
+							pairDiceTwo2.getText().equals(pairDiceOne2.getText()) ||
+							pairDiceTwo2.getText().equals(pairDiceOne3.getText()) ||
+							pairDiceTwo2.getText().equals(pairDiceTwo3.getText()))
+					{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceOne2.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceOne2.getText().equals(pairDiceTwo1.getText()) ||
-				   pairDiceOne2.getText().equals(pairDiceTwo2.getText()) ||
-				   pairDiceOne2.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceOne2.getText().equals(pairDiceTwo3.getText()))
-				{
+					}
+					else if(pairDiceOne3.getText().equals(pairDiceOne1.getText()) || 
+							pairDiceOne3.getText().equals(pairDiceTwo1.getText()) ||
+							pairDiceOne3.getText().equals(pairDiceOne2.getText()) ||
+							pairDiceOne3.getText().equals(pairDiceTwo2.getText()) ||
+							pairDiceOne3.getText().equals(pairDiceTwo3.getText()))
+					{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceTwo2.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceTwo2.getText().equals(pairDiceTwo1.getText()) ||
-				   pairDiceTwo2.getText().equals(pairDiceOne2.getText()) ||
-				   pairDiceTwo2.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceTwo2.getText().equals(pairDiceTwo3.getText()))
-				{
+					}
+					else if(pairDiceTwo3.getText().equals(pairDiceOne1.getText()) || 
+							pairDiceTwo3.getText().equals(pairDiceTwo1.getText()) ||
+							pairDiceTwo3.getText().equals(pairDiceOne2.getText()) ||
+							pairDiceTwo3.getText().equals(pairDiceTwo2.getText()) ||
+							pairDiceTwo3.getText().equals(pairDiceOne3.getText()))
+					{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceOne3.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceOne3.getText().equals(pairDiceTwo1.getText()) ||
-				   pairDiceOne3.getText().equals(pairDiceTwo2.getText()) ||
-				   pairDiceOne3.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceOne3.getText().equals(pairDiceTwo3.getText()))
-				{
-					   dicePairError1Label.setVisible(true);
-					   dicePairError2Label.setVisible(true);	   
+					}
+					else
+					{
+						playerTurn++;
+						blankDicePair1ErrorLabel.setVisible(false);
+						blankDicePair2ErrorLabel.setVisible(false);
+						blankDicePair3ErrorLabel.setVisible(false);
+						dicePairError1Label.setVisible(false);
+						dicePairError2Label.setVisible(false);
+						pairDicePanel.validate();
+						pairDicePanel.repaint();
+					}
 				}
 			}
 		});
