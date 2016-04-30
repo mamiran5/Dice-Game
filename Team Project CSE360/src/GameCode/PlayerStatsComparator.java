@@ -1,12 +1,16 @@
 package diceGame;
 
+/** The PlayerStatsComparator Class compares two String and returns a -1, 0, or 1 depending
+ *  on how different, lexicographically, the strings entered are from each other.
+ *  
+ * @author Michael Saul
+ * @version April 29, 2016.
+*/
 import java.util.Comparator;
 
-public class PlayerStatsComparator implements Comparator<String>
-{
-	@Override
-	public int compare(String x, String y)
-	{
+public class PlayerStatsComparator implements Comparator<String>{
+	
+	public int compare(String x, String y){
 		String [] info1 = x.split(" ", 3);
 		String [] info2 = y.split(" ", 3);
 		
@@ -14,13 +18,11 @@ public class PlayerStatsComparator implements Comparator<String>
 		double ratio1 = Double.parseDouble(info1[0]);
 		double ratio2 = Double.parseDouble(info2[0]);
 		
-	   if (ratio1 > ratio2)
-	   {
+	   if (ratio1 > ratio2){
 	       return -1;
 	   }
 	   
-	   else if (ratio1 < ratio2)
-	   {
+	   else if (ratio1 < ratio2){
 	       return 1;
 	   }
 	   
@@ -49,7 +51,7 @@ public class PlayerStatsComparator implements Comparator<String>
 			   }
 			   
 			   else{
-				   return 0; // should never happen
+				   return 0; // should never happen because a duplicate name should never come up as a possibility from HighScoreStats Class
 			   }
 		   }
 	   }
