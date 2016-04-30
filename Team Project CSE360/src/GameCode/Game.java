@@ -7,7 +7,7 @@ package diceGame;
  *  winner of the game is.
  *  
  * @author Michael Saul
- * @version April 25, 2016.
+ * @version April 29, 2016.
 */
 
 import java.io.File;
@@ -19,11 +19,18 @@ public class Game {
 	public static void main (String [] args) throws FileNotFoundException{
 		Scanner in = new Scanner(System.in);
 		
-		System.out.println("Please enter the number of turns you wish to play!");
-		int turnTotal = in.nextInt();
+		int turnTotal = 3;
+		boolean playersAllowed = false;
+		int playerNum = 0;
 		
-		System.out.println("Please enter the number of players that will participate in the game!");
-		int playerNum = in.nextInt();
+		while(!playersAllowed){
+			System.out.println("Please enter the number of players that will participate in the game!");
+			playerNum = in.nextInt();
+			
+			if(playerNum >= 1 || playerNum <= 4){
+				playersAllowed = true;
+			}
+		}
 		
 		Player [] playerList = new Player[playerNum];
 		
