@@ -49,4 +49,9 @@ public class GameDriver
 		return "" + currPlayer.getDiceList().get(position); 
 	}
 	
+	public int getDiceListValue(Player currPlayer, int position)
+	{
+		return currPlayer.getDiceList().get(position).getValue(); 
+	}
+	
 }
