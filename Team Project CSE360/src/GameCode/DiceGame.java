@@ -113,7 +113,7 @@ public class DiceGame{
 		startGameButton.setBounds(364, 390, 357, 110);
 		welcomePanel.add(startGameButton);
 		
-		JLabel welcomeLabel = new JLabel("Welcome to <Insert Game Title Here>!");
+		JLabel welcomeLabel = new JLabel("Welcome to DiceScapades");
 		welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		welcomeLabel.setBounds(59, 13, 596, 57);
