@@ -2,6 +2,14 @@ package diceGame;
 
 import java.io.*;
 
+/**
+ * The GameStats class is sued to record the game stats to the database as a history file. 
+ * It also reads from the file and prints it if the player wishes to see the stats.
+ * 
+ * @author Mauricio Gutierrez for CSE 360, PIN: 402
+ * @version April 15, 2016
+ * 
+ */
 public class GameStats {
 	
 	private int winner;
@@ -10,6 +18,14 @@ public class GameStats {
 						   + "*********                            NEW GAME STARTED                            *********\n"
 						   + "******************************************************************************************\n";
 	
+	/**
+	 * updateHistory - a function to append to the history file the stats of the game that has just been played.
+	 * If there is no history file then it creates a brand new one as "StatsHistory.txt".
+	 * 
+	 * @throws IOException - if the file cannot be accessed
+	 * 
+	 * @param playerList - an array list of all the current players in the game
+	 */
 	public void updateHistory(Player[] playerList) throws IOException
 	{
 	    File output = new File("StatsHistory.txt");
@@ -34,6 +50,11 @@ public class GameStats {
 		printer.close();
 	}
 	
+	/**
+	 * printHistory - a function to read from the "StatsHistory.txt" and print all its info to the screen for the player to see.
+	 * 
+	 * @throws IOException - if the file cannot be accessed
+	 */
 	public void printHistory() throws IOException
 	{
 		FileReader fReader = new FileReader("StatsHistory.txt");
