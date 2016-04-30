@@ -1,4 +1,4 @@
-package cse360proj1Test;
+package diceGame;
 
 import java.awt.EventQueue;
 
@@ -27,12 +27,6 @@ public class DiceGame{
 
 	private JFrame frame;
 	private JTextField playerNameTF;
-	private JTextField pairDiceOne1;
-	private JTextField pairDiceTwo1;
-	private JTextField pairDiceOne2;
-	private JTextField pairDiceTwo2;
-	private JTextField pairDiceOne3;
-	private JTextField pairDiceTwo3;
 	private JTextField attackPlayerTF1;
 	private JTextField attackPlayerTF2;
 	private JTextField attackPlayerTF3;
@@ -46,6 +40,13 @@ public class DiceGame{
 	//Set up Driver
 	GameDriver gameDriver = new GameDriver();
 	
+	//Set Up Pair Dice Control Variables
+	
+	boolean[] diceToggle = new boolean[6];
+	int pairToggleCount = 0;
+	int currentPairBeingChosen = 0;
+	int[] pairList = new int[6];
+	int pairsSelected = 0;
 	
 	/**
 	 * Launch the application.
@@ -314,28 +315,16 @@ public class DiceGame{
 		pairDicePanel.setLayout(null);
 		pairDicePanel.setVisible(false);
 		
-		JLabel dicePairLabel = new JLabel("What dice would you like to pair?");
+		JLabel dicePairLabel = new JLabel("Pair up your Dice!");
 		dicePairLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		dicePairLabel.setBounds(117, 13, 453, 37);
+		dicePairLabel.setBounds(240, 22, 238, 37);
 		pairDicePanel.add(dicePairLabel);
 		
 		JLabel dicePair1Label = new JLabel("Pair 1:");
 		dicePair1Label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		dicePair1Label.setHorizontalAlignment(SwingConstants.CENTER);
-		dicePair1Label.setBounds(12, 122, 73, 16);
+		dicePair1Label.setBounds(12, 159, 73, 16);
 		pairDicePanel.add(dicePair1Label);
-		
-		pairDiceOne1 = new JTextField();
-		pairDiceOne1.setHorizontalAlignment(SwingConstants.CENTER);
-		pairDiceOne1.setBounds(97, 122, 49, 22);
-		pairDicePanel.add(pairDiceOne1);
-		pairDiceOne1.setColumns(10);
-		
-		pairDiceTwo1 = new JTextField();
-		pairDiceTwo1.setHorizontalAlignment(SwingConstants.CENTER);
-		pairDiceTwo1.setBounds(158, 122, 49, 22);
-		pairDicePanel.add(pairDiceTwo1);
-		pairDiceTwo1.setColumns(10);
 		
 		JLabel dicePair2Label = new JLabel("Pair 2:");
 		dicePair2Label.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -343,80 +332,124 @@ public class DiceGame{
 		dicePair2Label.setBounds(12, 205, 73, 16);
 		pairDicePanel.add(dicePair2Label);
 		
-		pairDiceOne2 = new JTextField();
-		pairDiceOne2.setHorizontalAlignment(SwingConstants.RIGHT);
-		pairDiceOne2.setBounds(97, 205, 49, 22);
-		pairDicePanel.add(pairDiceOne2);
-		pairDiceOne2.setColumns(10);
-		
-		pairDiceTwo2 = new JTextField();
-		pairDiceTwo2.setHorizontalAlignment(SwingConstants.CENTER);
-		pairDiceTwo2.setBounds(158, 205, 49, 22);
-		pairDicePanel.add(pairDiceTwo2);
-		pairDiceTwo2.setColumns(10);
-		
 		JLabel dicePair3Label = new JLabel("Pair 3:");
 		dicePair3Label.setHorizontalAlignment(SwingConstants.CENTER);
 		dicePair3Label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		dicePair3Label.setBounds(12, 284, 73, 16);
+		dicePair3Label.setBounds(12, 251, 73, 16);
 		pairDicePanel.add(dicePair3Label);
 		
-		pairDiceOne3 = new JTextField();
-		pairDiceOne3.setHorizontalAlignment(SwingConstants.CENTER);
-		pairDiceOne3.setBounds(97, 284, 49, 22);
-		pairDicePanel.add(pairDiceOne3);
-		pairDiceOne3.setColumns(10);
+		JButton pairDoneButton = new JButton("Done!");
+		pairDoneButton.setFont(new Font("Tahoma", Font.BOLD, 30));
+		pairDoneButton.setBounds(53, 376, 222, 86);
+		pairDicePanel.add(pairDoneButton);
 		
-		pairDiceTwo3 = new JTextField();
-		pairDiceTwo3.setHorizontalAlignment(SwingConstants.CENTER);
-		pairDiceTwo3.setBounds(158, 284, 49, 22);
-		pairDicePanel.add(pairDiceTwo3);
-		pairDiceTwo3.setColumns(10);
-		
-		JButton pairButton = new JButton("Pair!");
-		pairButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		pairButton.setBounds(12, 349, 195, 63);
-		pairDicePanel.add(pairButton);
-		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("Select two dice, then select Lock In! ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel.setBounds(405, 83, 56, 16);
+		lblNewLabel.setBounds(316, 95, 274, 16);
 		pairDicePanel.add(lblNewLabel);
 		
-		JLabel dicePairError1Label = new JLabel("Check your dice pairs!");
-		dicePairError1Label.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		dicePairError1Label.setForeground(Color.RED);
-		dicePairError1Label.setBounds(12, 414, 195, 27);
-		pairDicePanel.add(dicePairError1Label);
-		dicePairError1Label.setVisible(false);
+		JButton btnDice1 = new JButton("Dice 1");
+		btnDice1.setBounds(342, 122, 73, 67);
+		pairDicePanel.add(btnDice1);
 		
-		JLabel dicePairError2Label = new JLabel("(Each die can only be used once!)");
-		dicePairError2Label.setForeground(Color.RED);
-		dicePairError2Label.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		dicePairError2Label.setBounds(12, 439, 258, 22);
-		pairDicePanel.add(dicePairError2Label);
-		dicePairError2Label.setVisible(false);
+		JButton btnDice2 = new JButton("Dice 2");
+		btnDice2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDice2.setBounds(487, 122, 73, 67);
+		pairDicePanel.add(btnDice2);
 		
-		JLabel blankDicePair1ErrorLabel = new JLabel("Enter a dice pair!");
-		blankDicePair1ErrorLabel.setForeground(Color.RED);
-		blankDicePair1ErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		blankDicePair1ErrorLabel.setBounds(22, 151, 185, 22);
-		pairDicePanel.add(blankDicePair1ErrorLabel);
-		blankDicePair1ErrorLabel.setVisible(false);
+		JButton btnDice3 = new JButton("Dice 3");
+		btnDice3.setBounds(285, 229, 73, 67);
+		pairDicePanel.add(btnDice3);
 		
-		JLabel blankDicePair2ErrorLabel = new JLabel("Enter a dice pair!");
-		blankDicePair2ErrorLabel.setForeground(Color.RED);
-		blankDicePair2ErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		blankDicePair2ErrorLabel.setBounds(22, 236, 185, 22);
-		pairDicePanel.add(blankDicePair2ErrorLabel);
-		blankDicePair2ErrorLabel.setVisible(false);
+		JButton btnDice4 = new JButton("Dice 4");
+		btnDice4.setBounds(560, 233, 73, 63);
+		pairDicePanel.add(btnDice4);
 		
-		JLabel blankDicePair3ErrorLabel = new JLabel("Enter a dice pair!");
-		blankDicePair3ErrorLabel.setForeground(Color.RED);
-		blankDicePair3ErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		blankDicePair3ErrorLabel.setBounds(22, 314, 185, 22);
-		pairDicePanel.add(blankDicePair3ErrorLabel);
-		blankDicePair3ErrorLabel.setVisible(false);
+		JButton btnDice5 = new JButton("Dice 5");
+		btnDice5.setBounds(353, 343, 73, 67);
+		pairDicePanel.add(btnDice5);
+		
+		JButton btnDice6 = new JButton("Dice 6");
+		btnDice6.setBounds(487, 343, 73, 67);
+		pairDicePanel.add(btnDice6);
+		
+		JButton btnLockInPair = new JButton("Lock In!");
+		btnLockInPair.setBounds(411, 251, 100, 23);
+		pairDicePanel.add(btnLockInPair);
+		
+		JLabel dice1Selected = new JLabel("Selected!");
+		dice1Selected.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		dice1Selected.setBounds(352, 193, 57, 14);
+		pairDicePanel.add(dice1Selected);
+		
+		JLabel dice2Selected = new JLabel("Selected!");
+		dice2Selected.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		dice2Selected.setBounds(497, 193, 57, 14);
+		pairDicePanel.add(dice2Selected);
+		
+		JLabel dice3Selected = new JLabel("Selected!");
+		dice3Selected.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		dice3Selected.setBounds(295, 305, 57, 14);
+		pairDicePanel.add(dice3Selected);
+		
+		JLabel dice4Selected = new JLabel("Selected!");
+		dice4Selected.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		dice4Selected.setBounds(570, 306, 57, 12);
+		pairDicePanel.add(dice4Selected);
+		
+		JLabel dice5Selected = new JLabel("Selected!");
+		dice5Selected.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		dice5Selected.setBounds(363, 410, 57, 14);
+		pairDicePanel.add(dice5Selected);
+		
+		JLabel dice6Selected = new JLabel("Selected!");
+		dice6Selected.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		dice6Selected.setBounds(497, 410, 57, 14);
+		pairDicePanel.add(dice6Selected);
+		
+		JLabel lblPair = new JLabel("Choose Pair 1!");
+		lblPair.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		lblPair.setBounds(402, 282, 132, 22);
+		pairDicePanel.add(lblPair);
+		
+		JLabel pairLabel1a = new JLabel("#");
+		pairLabel1a.setHorizontalAlignment(SwingConstants.CENTER);
+		pairLabel1a.setBackground(Color.WHITE);
+		pairLabel1a.setBounds(91, 164, 23, 14);
+		pairDicePanel.add(pairLabel1a);
+		
+		JLabel pairLabel1b = new JLabel("#");
+		pairLabel1b.setHorizontalAlignment(SwingConstants.CENTER);
+		pairLabel1b.setBackground(Color.WHITE);
+		pairLabel1b.setBounds(127, 164, 23, 14);
+		pairDicePanel.add(pairLabel1b);
+		
+		JLabel pairLabel2a = new JLabel("#");
+		pairLabel2a.setHorizontalAlignment(SwingConstants.CENTER);
+		pairLabel2a.setBackground(Color.WHITE);
+		pairLabel2a.setBounds(91, 210, 23, 14);
+		pairDicePanel.add(pairLabel2a);
+		
+		JLabel pairLabel2b = new JLabel("#");
+		pairLabel2b.setHorizontalAlignment(SwingConstants.CENTER);
+		pairLabel2b.setBackground(Color.WHITE);
+		pairLabel2b.setBounds(127, 210, 23, 14);
+		pairDicePanel.add(pairLabel2b);
+		
+		JLabel pairLabel3a = new JLabel("#");
+		pairLabel3a.setHorizontalAlignment(SwingConstants.CENTER);
+		pairLabel3a.setBackground(Color.WHITE);
+		pairLabel3a.setBounds(91, 256, 23, 14);
+		pairDicePanel.add(pairLabel3a);
+		
+		JLabel pairLabel3b = new JLabel("#");
+		pairLabel3b.setHorizontalAlignment(SwingConstants.CENTER);
+		pairLabel3b.setBackground(Color.WHITE);
+		pairLabel3b.setBounds(127, 256, 23, 14);
+		pairDicePanel.add(pairLabel3b);
 		
 		// end the dice pair panel
 		
@@ -795,78 +828,1063 @@ public class DiceGame{
 		});		
 		// begin pair dice panel actions
 		
-		pairButton.addActionListener(new ActionListener()
+		pairDoneButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				if(pairDiceOne1.getText().equals("") || pairDiceTwo1.getText().equals("") || (pairDiceOne1.getText().equals("") && pairDiceTwo1.getText().equals("")))
-				{
-					blankDicePair1ErrorLabel.setVisible(true);
-				}
-				if(pairDiceOne2.getText().equals("") || pairDiceTwo2.getText().equals("") || (pairDiceOne2.getText().equals("") && pairDiceTwo2.getText().equals("")))
-				{
-					blankDicePair2ErrorLabel.setVisible(true);
-				}
-				if(pairDiceOne3.getText().equals("") || pairDiceTwo3.getText().equals("") || (pairDiceOne3.getText().equals("") && pairDiceTwo3.getText().equals("")))
-				{
-					blankDicePair3ErrorLabel.setVisible(true);
-				}
-				if(pairDiceOne1.getText().equals(pairDiceTwo1.getText()) || 
-				   pairDiceOne1.getText().equals(pairDiceOne2.getText())  ||
-				   pairDiceOne1.getText().equals(pairDiceTwo2.getText())  ||
-				   pairDiceOne1.getText().equals(pairDiceOne3.getText())  ||
-				   pairDiceOne1.getText().equals(pairDiceTwo3.getText()))
-				{
-					   dicePairError1Label.setVisible(true);
-					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceTwo1.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceTwo1.getText().equals(pairDiceOne2.getText()) ||
-				   pairDiceTwo1.getText().equals(pairDiceTwo2.getText()) ||
-				   pairDiceTwo1.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceTwo1.getText().equals(pairDiceTwo3.getText()))
-				{
-					   dicePairError1Label.setVisible(true);
-					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceOne2.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceOne2.getText().equals(pairDiceTwo1.getText()) ||
-				   pairDiceOne2.getText().equals(pairDiceTwo2.getText()) ||
-				   pairDiceOne2.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceOne2.getText().equals(pairDiceTwo3.getText()))
-				{
-					   dicePairError1Label.setVisible(true);
-					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceTwo2.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceTwo2.getText().equals(pairDiceTwo1.getText()) ||
-				   pairDiceTwo2.getText().equals(pairDiceOne2.getText()) ||
-				   pairDiceTwo2.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceTwo2.getText().equals(pairDiceTwo3.getText()))
-				{
-					   dicePairError1Label.setVisible(true);
-					   dicePairError2Label.setVisible(true);	   
-				}
-				if(pairDiceOne3.getText().equals(pairDiceOne1.getText()) || 
-				   pairDiceOne3.getText().equals(pairDiceTwo1.getText()) ||
-				   pairDiceOne3.getText().equals(pairDiceTwo2.getText()) ||
-				   pairDiceOne3.getText().equals(pairDiceOne3.getText()) ||
-				   pairDiceOne3.getText().equals(pairDiceTwo3.getText()))
-				{
-					   dicePairError1Label.setVisible(true);
-					   dicePairError2Label.setVisible(true);	   
-				}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
+			
 		});
 		
 		nextButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent arg0)
+
+			@Override
+			public void actionPerformed(ActionEvent e)
 			{
+				//Transition panels
 				rollDicePanel.setVisible(false);
 				pairDicePanel.setVisible(true);
+				
+				//Hide selected Indicators
+				dice1Selected.setVisible(false);
+				dice2Selected.setVisible(false);
+				dice3Selected.setVisible(false);
+				dice4Selected.setVisible(false);
+				dice5Selected.setVisible(false);
+				dice6Selected.setVisible(false);
+				
+				//Show dice to show numbers
+				btnDice1.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 0));
+				btnDice2.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 1));
+				btnDice3.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 2));
+				btnDice4.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 3));
+				btnDice5.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 4));
+				btnDice6.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 5));
+				
+				//Disable Buttons that should not be pressed yet.
+				
+				pairDoneButton.setEnabled(false);
+				btnLockInPair.setEnabled(false);
+				
+				
+			}
+			
+		});
+		
+		btnLockInPair.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if (pairToggleCount == 2 && pairsSelected == 0)
+				{
+					btnLockInPair.setEnabled(false);
+					lblPair.setText("Choose Pair 2! ");
+					
+					if (diceToggle[0] == true )
+					{
+						dice1Selected.setVisible(false);
+						btnDice1.setVisible(false);
+						
+					}
+					else
+					{
+						btnDice1.setEnabled(true);
+					}
+					
+					if (diceToggle[1] == true )
+					{
+						dice2Selected.setVisible(false);
+						btnDice2.setVisible(false);
+					}
+					else
+					{
+						btnDice2.setEnabled(true);
+					}
+					
+					if (diceToggle[2] == true )
+					{
+						dice3Selected.setVisible(false);
+						btnDice3.setVisible(false);
+					}
+					else
+					{
+						btnDice3.setEnabled(true);
+					}
+					
+					if (diceToggle[3] == true )
+					{
+						dice4Selected.setVisible(false);
+						btnDice4.setVisible(false);
+					}
+					else
+					{
+						btnDice4.setEnabled(true);
+					}
+					
+					if (diceToggle[4] == true )
+					{
+						dice5Selected.setVisible(false);
+						btnDice5.setVisible(false);
+					}
+					else 
+					{
+						btnDice5.setEnabled(true);
+					}
+					
+					if (diceToggle[5] == true )
+					{
+						dice6Selected.setVisible(false);
+						btnDice6.setVisible(false);
+					}
+					else
+					{
+						btnDice6.setEnabled(true);
+					}
+						
+					
+				}
+			}
+			
+		});
+		
+		/**Dice buttons
+		 * 
+		 */
+		btnDice1.addActionListener(new ActionListener()
+		{	
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				if (diceToggle[0] == false)
+				{
+					pairList[currentPairBeingChosen] = gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0), 0);
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0));
+							break;
+						case(1):
+							pairLabel1b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0));
+							break;
+						case(2):
+							pairLabel2a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0));	
+							break;
+						case(3):
+							pairLabel2b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0));
+							break;
+						case(4):
+							pairLabel3a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0));
+							break;
+						case(5):
+							pairLabel3b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0));
+							break;
+						default:
+							break;
+					}
+					
+					currentPairBeingChosen++;
+				
+				}
+				//DeToggle The Last one chosen.
+				else
+				{
+					currentPairBeingChosen--;
+					if(gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0) != pairList[currentPairBeingChosen] 
+							&& currentPairBeingChosen%2 == 1)
+					{
+							//Move this value down to keep the old value
+							pairList[currentPairBeingChosen-1] = pairList[currentPairBeingChosen];
+							
+							switch(currentPairBeingChosen-1)
+							{
+								case(0):
+									pairLabel1a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(1):
+									pairLabel1b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(2):
+									pairLabel2a.setText(pairList[currentPairBeingChosen-1] + "");	
+									break;
+								case(3):
+									pairLabel2b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(4):
+									pairLabel3a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(5):
+									pairLabel3b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								default:
+									break;
+							}
+							
+							pairList[currentPairBeingChosen] = 0;
+					}
+		
+					
+					switch(currentPairBeingChosen)
+					{
+					
+						case(0):
+							pairLabel1a.setText("#");
+							break;
+						case(1):
+							pairLabel1b.setText("#");
+							break;
+						case(2):
+							pairLabel2a.setText("#");	
+							break;
+						case(3):
+							pairLabel2b.setText("#");
+							break;
+						case(4):
+							pairLabel3a.setText("#");
+							break;
+						case(5):
+							pairLabel3b.setText("#");
+							break;
+						default:
+							break;
+					}
+					
+				}
+				
+					diceToggle[0] = !diceToggle[0];
+					
+					dice1Selected.setVisible(diceToggle[0]);
+					dice2Selected.setVisible(diceToggle[1]);
+					dice3Selected.setVisible(diceToggle[2]);
+					dice4Selected.setVisible(diceToggle[3]);
+					dice5Selected.setVisible(diceToggle[4]);
+					dice6Selected.setVisible(diceToggle[5]);
+					
+					
+					
+					//Check the number of checked buttons
+					toggleCounter();
+					
+					if (pairToggleCount == 2)
+					{
+						btnLockInPair.setEnabled(true);
+						
+						if (diceToggle[0] == false)
+						{
+							btnDice1.setEnabled(false);
+						}
+						if (diceToggle[1] == false)
+						{
+							btnDice2.setEnabled(false);
+						}
+						if (diceToggle[2] == false)
+						{
+							btnDice3.setEnabled(false);
+						}
+						if (diceToggle[3] == false)
+						{
+							btnDice4.setEnabled(false);
+						}
+						if (diceToggle[4] == false)
+						{
+							btnDice5.setEnabled(false);
+						}
+						if (diceToggle[5] == false)
+						{
+							btnDice6.setEnabled(false);
+						}
+					}
+					else
+					{
+						btnLockInPair.setEnabled(false);
+						btnDice1.setEnabled(true);
+						btnDice2.setEnabled(true);
+						btnDice3.setEnabled(true);
+						btnDice4.setEnabled(true);
+						btnDice5.setEnabled(true);
+						btnDice6.setEnabled(true);
+					}
 			}
 		});
+		
+		btnDice2.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				if (diceToggle[1] == false)
+				{
+					pairList[currentPairBeingChosen] = gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0), 1);
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),1));
+							break;
+						case(1):
+							pairLabel1b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),1));
+							break;
+						case(2):
+							pairLabel2a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),1));	
+							break;
+						case(3):
+							pairLabel2b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),1));
+							break;
+						case(4):
+							pairLabel3a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),1));
+							break;
+						case(5):
+							pairLabel3b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),1));
+							break;
+						default:
+							break;
+					}
+					
+					currentPairBeingChosen++;
+				
+				}
+				else
+				{
+					currentPairBeingChosen--;
+					if(gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0) != pairList[currentPairBeingChosen] 
+							&& currentPairBeingChosen%2 == 1)
+					{
+							//Move this value down to keep the old value
+							pairList[currentPairBeingChosen-1] = pairList[currentPairBeingChosen];
+							
+							switch(currentPairBeingChosen-1)
+							{
+								case(0):
+									pairLabel1a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(1):
+									pairLabel1b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(2):
+									pairLabel2a.setText(pairList[currentPairBeingChosen-1] + "");	
+									break;
+								case(3):
+									pairLabel2b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(4):
+									pairLabel3a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(5):
+									pairLabel3b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								default:
+									break;
+							}
+							pairList[currentPairBeingChosen] = 0;
+					}
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("#");
+							break;
+						case(1):
+							pairLabel1b.setText("#");
+							break;
+						case(2):
+							pairLabel2a.setText("#");	
+							break;
+						case(3):
+							pairLabel2b.setText("#");
+							break;
+						case(4):
+							pairLabel3a.setText("#");
+							break;
+						case(5):
+							pairLabel3b.setText("#");
+							break;
+						default:
+							break;
+					}
+					
+				}
+				
+				diceToggle[1] = !diceToggle[1];
+				
+				dice1Selected.setVisible(diceToggle[0]);
+				dice2Selected.setVisible(diceToggle[1]);
+				dice3Selected.setVisible(diceToggle[2]);
+				dice4Selected.setVisible(diceToggle[3]);
+				dice5Selected.setVisible(diceToggle[4]);
+				dice6Selected.setVisible(diceToggle[5]);
+				
+				toggleCounter();
+				
+				if (pairToggleCount == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else
+				{
+					btnLockInPair.setEnabled(false);
+					btnDice1.setEnabled(true);
+					btnDice2.setEnabled(true);
+					btnDice3.setEnabled(true);
+					btnDice4.setEnabled(true);
+					btnDice5.setEnabled(true);
+					btnDice6.setEnabled(true);
+				}
+				
+			}
+		});
+		
+		btnDice3.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				
+				if (diceToggle[2] == false)
+				{
+					pairList[currentPairBeingChosen] = gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0), 2);
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),2));
+							break;
+						case(1):
+							pairLabel1b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),2));
+							break;
+						case(2):
+							pairLabel2a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),2));	
+							break;
+						case(3):
+							pairLabel2b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),2));
+							break;
+						case(4):
+							pairLabel3a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),2));
+							break;
+						case(5):
+							pairLabel3b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),2));
+							break;
+						default:
+							break;
+					}
+					
+					currentPairBeingChosen++;
+				
+				}
+				else
+				{
+					currentPairBeingChosen--;
+					if(gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0) != pairList[currentPairBeingChosen] 
+							&& currentPairBeingChosen%2 == 1)
+					{
+							//Move this value down to keep the old value
+							pairList[currentPairBeingChosen-1] = pairList[currentPairBeingChosen];
+							
+							switch(currentPairBeingChosen-1)
+							{
+								case(0):
+									pairLabel1a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(1):
+									pairLabel1b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(2):
+									pairLabel2a.setText(pairList[currentPairBeingChosen-1] + "");	
+									break;
+								case(3):
+									pairLabel2b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(4):
+									pairLabel3a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(5):
+									pairLabel3b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								default:
+									break;
+							}
+							
+							pairList[currentPairBeingChosen] = 0;
+					}
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("#");
+							break;
+						case(1):
+							pairLabel1b.setText("#");
+							break;
+						case(2):
+							pairLabel2a.setText("#");	
+							break;
+						case(3):
+							pairLabel2b.setText("#");
+							break;
+						case(4):
+							pairLabel3a.setText("#");
+							break;
+						case(5):
+							pairLabel3b.setText("#");
+							break;
+						default:
+							break;
+					}
+					
+				}
+				
+				diceToggle[2] = !diceToggle[2];
+				
+				dice1Selected.setVisible(diceToggle[0]);
+				dice2Selected.setVisible(diceToggle[1]);
+				dice3Selected.setVisible(diceToggle[2]);
+				dice4Selected.setVisible(diceToggle[3]);
+				dice5Selected.setVisible(diceToggle[4]);
+				dice6Selected.setVisible(diceToggle[5]);
+				
+				toggleCounter();
+				
+				if (pairToggleCount == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else
+				{
+					btnLockInPair.setEnabled(false);
+					btnDice1.setEnabled(true);
+					btnDice2.setEnabled(true);
+					btnDice3.setEnabled(true);
+					btnDice4.setEnabled(true);
+					btnDice5.setEnabled(true);
+					btnDice6.setEnabled(true);
+				}
+				
+			}
 			
+		});
+		
+		btnDice4.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (diceToggle[3] == false)
+				{
+					pairList[currentPairBeingChosen] = gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0), 3);
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),3));
+							break;
+						case(1):
+							pairLabel1b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),3));
+							break;
+						case(2):
+							pairLabel2a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),3));	
+							break;
+						case(3):
+							pairLabel2b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),3));
+							break;
+						case(4):
+							pairLabel3a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),3));
+							break;
+						case(5):
+							pairLabel3b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),3));
+							break;
+						default:
+							break;
+					}
+					
+					currentPairBeingChosen++;
+				
+				}
+				else
+				{
+					currentPairBeingChosen--;
+					if(gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0) != pairList[currentPairBeingChosen] 
+							&& currentPairBeingChosen%2 == 1)
+					{
+							//Move this value down to keep the old value
+							pairList[currentPairBeingChosen-1] = pairList[currentPairBeingChosen];
+							
+							switch(currentPairBeingChosen-1)
+							{
+								case(0):
+									pairLabel1a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(1):
+									pairLabel1b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(2):
+									pairLabel2a.setText(pairList[currentPairBeingChosen-1] + "");	
+									break;
+								case(3):
+									pairLabel2b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(4):
+									pairLabel3a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(5):
+									pairLabel3b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								default:
+									break;
+							}
+							
+							pairList[currentPairBeingChosen] = 0;
+					}
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("#");
+							break;
+						case(1):
+							pairLabel1b.setText("#");
+							break;
+						case(2):
+							pairLabel2a.setText("#");	
+							break;
+						case(3):
+							pairLabel2b.setText("#");
+							break;
+						case(4):
+							pairLabel3a.setText("#");
+							break;
+						case(5):
+							pairLabel3b.setText("#");
+							break;
+						default:
+							break;
+					}
+					
+				}
+				
+				diceToggle[3] = !diceToggle[3];
+				
+				dice1Selected.setVisible(diceToggle[0]);
+				dice2Selected.setVisible(diceToggle[1]);
+				dice3Selected.setVisible(diceToggle[2]);
+				dice4Selected.setVisible(diceToggle[3]);
+				dice5Selected.setVisible(diceToggle[4]);
+				dice6Selected.setVisible(diceToggle[5]);
+				
+				toggleCounter();
+				
+				if (pairToggleCount == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else
+				{
+					btnLockInPair.setEnabled(false);
+					btnDice1.setEnabled(true);
+					btnDice2.setEnabled(true);
+					btnDice3.setEnabled(true);
+					btnDice4.setEnabled(true);
+					btnDice5.setEnabled(true);
+					btnDice6.setEnabled(true);
+				}
+				
+			}
+		});
+		
+		btnDice5.addActionListener(new ActionListener() 
+		{
+			
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				if (diceToggle[4] == false)
+				{
+					pairList[currentPairBeingChosen] = gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0), 4);
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),4));
+							break;
+						case(1):
+							pairLabel1b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),4));
+							break;
+						case(2):
+							pairLabel2a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),4));	
+							break;
+						case(3):
+							pairLabel2b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),4));
+							break;
+						case(4):
+							pairLabel3a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),4));
+							break;
+						case(5):
+							pairLabel3b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),4));
+							break;
+						default:
+							break;
+					}
+					
+					currentPairBeingChosen++;
+				
+				}
+				else
+				{
+					currentPairBeingChosen--;
+					if(gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0) != pairList[currentPairBeingChosen] 
+							&& currentPairBeingChosen%2 == 1)
+					{
+							//Move this value down to keep the old value
+							pairList[currentPairBeingChosen-1] = pairList[currentPairBeingChosen];
+							
+							switch(currentPairBeingChosen-1)
+							{
+								case(0):
+									pairLabel1a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(1):
+									pairLabel1b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(2):
+									pairLabel2a.setText(pairList[currentPairBeingChosen-1] + "");	
+									break;
+								case(3):
+									pairLabel2b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(4):
+									pairLabel3a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(5):
+									pairLabel3b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								default:
+									break;
+							}
+							pairList[currentPairBeingChosen] = 0;
+					}
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("#");
+							break;
+						case(1):
+							pairLabel1b.setText("#");
+							break;
+						case(2):
+							pairLabel2a.setText("#");	
+							break;
+						case(3):
+							pairLabel2b.setText("#");
+							break;
+						case(4):
+							pairLabel3a.setText("#");
+							break;
+						case(5):
+							pairLabel3b.setText("#");
+							break;
+						default:
+							break;
+					}
+					
+				}
+				
+				diceToggle[4] = !diceToggle[4];
+				
+				dice1Selected.setVisible(diceToggle[0]);
+				dice2Selected.setVisible(diceToggle[1]);
+				dice3Selected.setVisible(diceToggle[2]);
+				dice4Selected.setVisible(diceToggle[3]);
+				dice5Selected.setVisible(diceToggle[4]);
+				dice6Selected.setVisible(diceToggle[5]);
+				
+				toggleCounter();
+				
+				if (pairToggleCount == 2 && pairsSelected == 0)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else
+				{
+					btnLockInPair.setEnabled(false);
+					btnDice1.setEnabled(true);
+					btnDice2.setEnabled(true);
+					btnDice3.setEnabled(true);
+					btnDice4.setEnabled(true);
+					btnDice5.setEnabled(true);
+					btnDice6.setEnabled(true);
+				}
+			}
+		});
+		
+		btnDice6.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				if (diceToggle[5] == false)
+				{
+					pairList[currentPairBeingChosen] = gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0), 5);
+					
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),5));
+							break;
+						case(1):
+							pairLabel1b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),5));
+							break;
+						case(2):
+							pairLabel2a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),5));	
+							break;
+						case(3):
+							pairLabel2b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),5));
+							break;
+						case(4):
+							pairLabel3a.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),5));
+							break;
+						case(5):
+							pairLabel3b.setText("" + gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),5));
+							break;
+						default:
+							break;
+					}
+					
+					currentPairBeingChosen++;
+				
+				}
+				else
+				{
+					currentPairBeingChosen--;
+					if(gameDriver.getDiceListValue(gameDriver.getCurrPlayers().get(0),0) != pairList[currentPairBeingChosen] 
+							&& currentPairBeingChosen%2 == 1)
+					{
+							//Move this value down to keep the old value
+							pairList[currentPairBeingChosen-1] = pairList[currentPairBeingChosen];
+							
+							switch(currentPairBeingChosen-1)
+							{
+								case(0):
+									pairLabel1a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(1):
+									pairLabel1b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(2):
+									pairLabel2a.setText(pairList[currentPairBeingChosen-1] + "");	
+									break;
+								case(3):
+									pairLabel2b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(4):
+									pairLabel3a.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								case(5):
+									pairLabel3b.setText(pairList[currentPairBeingChosen-1] + "");
+									break;
+								default:
+									break;
+							}
+							
+							pairList[currentPairBeingChosen] = 0;
+					}
+					switch(currentPairBeingChosen)
+					{
+						case(0):
+							pairLabel1a.setText("#");
+							break;
+						case(1):
+							pairLabel1b.setText("#");
+							break;
+						case(2):
+							pairLabel2a.setText("#");	
+							break;
+						case(3):
+							pairLabel2b.setText("#");
+							break;
+						case(4):
+							pairLabel3a.setText("#");
+							break;
+						case(5):
+							pairLabel3b.setText("#");
+							break;
+						default:
+							break;
+					}
+					
+				}
+				
+				diceToggle[5] = !diceToggle[5];
+				
+				dice1Selected.setVisible(diceToggle[0]);
+				dice2Selected.setVisible(diceToggle[1]);
+				dice3Selected.setVisible(diceToggle[2]);
+				dice4Selected.setVisible(diceToggle[3]);
+				dice5Selected.setVisible(diceToggle[4]);
+				dice6Selected.setVisible(diceToggle[5]);
+				
+				toggleCounter();
+				
+				if (pairToggleCount == 2 && pairsSelected == 0)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else
+				{
+					btnLockInPair.setEnabled(false);
+					
+					btnDice1.setEnabled(true);
+					btnDice2.setEnabled(true);
+					btnDice3.setEnabled(true);
+					btnDice4.setEnabled(true);
+					btnDice5.setEnabled(true);
+					btnDice6.setEnabled(true);
+				}
+			}
+			
+			
+		});
+		
+		
+		
 	}
+	
+	private void toggleCounter()
+	{
+		pairToggleCount = 0;
+		
+		for( int counter = 0; counter < diceToggle.length; counter++)
+		{
+			if (diceToggle[counter] == true )
+			{
+				pairToggleCount++;
+			}
+			
+		}
+	}
+	
+
 }
