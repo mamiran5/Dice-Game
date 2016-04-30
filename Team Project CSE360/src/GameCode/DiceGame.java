@@ -27,10 +27,18 @@ public class DiceGame{
 
 	private JFrame frame;
 	private JTextField playerNameTF;
+	private JTextField pairDiceOne1;
+	private JTextField pairDiceTwo1;
+	private JTextField pairDiceOne2;
+	private JTextField pairDiceTwo2;
+	private JTextField pairDiceOne3;
+	private JTextField pairDiceTwo3;
 	private JTextField attackPlayerTF1;
 	private JTextField attackPlayerTF2;
 	private JTextField attackPlayerTF3;
 	private int gameSize = 0;
+	private int playerCount = 1;
+	private int turnCount = 1;
 	//private boolean twoPlayers;
 	//private boolean threePlayers;
 	//private boolean fourPlayers;
@@ -236,9 +244,18 @@ public class DiceGame{
 		turn2Panel.setVisible(false);
 		
 		JButton turn2Button = new JButton("Turn 2");
+		turn2Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		turn2Button.setFont(new Font("Tahoma", Font.PLAIN, 38));
-		turn2Button.setBounds(0, 0, 721, 500);
+		turn2Button.setBounds(0, 181, 721, 319);
 		turn2Panel.add(turn2Button);
+		
+		JLabel lblTheWinnerIs = new JLabel("The Winner is: ");
+		lblTheWinnerIs.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lblTheWinnerIs.setBounds(55, 44, 604, 72);
+		turn2Panel.add(lblTheWinnerIs);
 		
 		// end the turn 2 panel
 		
@@ -251,8 +268,13 @@ public class DiceGame{
 		
 		JButton turn3Button = new JButton("Turn 3");
 		turn3Button.setFont(new Font("Tahoma", Font.PLAIN, 38));
-		turn3Button.setBounds(0, 0, 721, 500);
+		turn3Button.setBounds(0, 169, 721, 331);
 		turn3Panel.add(turn3Button);
+		
+		JLabel label = new JLabel("The Winner is: ");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		label.setBounds(61, 55, 604, 72);
+		turn3Panel.add(label);
 		
 		// end the turn 3 panel
 		
@@ -458,16 +480,15 @@ public class DiceGame{
 		
 		// begin the attack panel
 		
+		
 		JPanel attackPanel = new JPanel();
 		frame.getContentPane().add(attackPanel, "name_367291419902653");
 		attackPanel.setLayout(null);
 		attackPanel.setVisible(false);
-		
 		JLabel player1ScoreLabel = new JLabel("Player 1 Score:");
 		player1ScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		player1ScoreLabel.setBounds(12, 15, 134, 16);
+		player1ScoreLabel.setBounds(12, 8, 134, 30);
 		attackPanel.add(player1ScoreLabel);
-		
 		JLabel player1Score = new JLabel("Score1");
 		player1Score.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		player1Score.setBounds(158, 16, 93, 16);
@@ -475,7 +496,7 @@ public class DiceGame{
 		
 		JLabel player2ScoreLabel = new JLabel("Player 2 Score:");
 		player2ScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		player2ScoreLabel.setBounds(12, 46, 134, 16);
+		player2ScoreLabel.setBounds(12, 39, 134, 30);
 		attackPanel.add(player2ScoreLabel);
 		
 		JLabel player2Score = new JLabel("Score2");
@@ -485,7 +506,7 @@ public class DiceGame{
 		
 		JLabel player3ScoreLabel = new JLabel("Player 3 Score:");
 		player3ScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		player3ScoreLabel.setBounds(12, 77, 134, 16);
+		player3ScoreLabel.setBounds(12, 70, 134, 30);
 		attackPanel.add(player3ScoreLabel);
 		
 		JLabel player3Score = new JLabel("Score3");
@@ -495,12 +516,12 @@ public class DiceGame{
 		
 		JLabel player4ScoreLabel = new JLabel("Player 4 Score:");
 		player4ScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		player4ScoreLabel.setBounds(12, 108, 134, 16);
+		player4ScoreLabel.setBounds(12, 97, 134, 30);
 		attackPanel.add(player4ScoreLabel);
 		
 		JLabel player4Score = new JLabel("Score4");
 		player4Score.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		player4Score.setBounds(158, 109, 93, 16);
+		player4Score.setBounds(158, 105, 93, 16);
 		attackPanel.add(player4Score);
 		
 		JLabel attackQuestionLabel = new JLabel("Who would you like to attack in each round? How?");
@@ -538,9 +559,15 @@ public class DiceGame{
 		diceBlockButton1.setBounds(318, 168, 127, 25);
 		attackPanel.add(diceBlockButton1);
 		
+		JRadioButton doNothingButton1 = new JRadioButton("Do Nothing!");
+		doNothingButton1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		doNothingButton1.setBounds(449, 168, 127, 25);
+		attackPanel.add(doNothingButton1);
+		
 		attackButtons1.add(hindranceButton1);
 		attackButtons1.add(luckyDiceButton1);
 		attackButtons1.add(diceBlockButton1);
+		attackButtons1.add(doNothingButton1);
 		
 		JLabel round2Label = new JLabel("Round 2:");
 		round2Label.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -568,9 +595,15 @@ public class DiceGame{
 		diceBlockButton2.setBounds(318, 307, 127, 25);
 		attackPanel.add(diceBlockButton2);
 		
+		JRadioButton doNothingButton2 = new JRadioButton("Do Nothing!");
+		doNothingButton2.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		doNothingButton2.setBounds(449, 311, 127, 25);
+		attackPanel.add(doNothingButton2);
+		
 		attackButtons2.add(hindranceButton2);
 		attackButtons2.add(luckyDiceButton2);
 		attackButtons2.add(diceBlockButton2);
+		attackButtons2.add(doNothingButton2);
 		
 		JLabel round3Label = new JLabel("Round 3:");
 		round3Label.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -598,20 +631,34 @@ public class DiceGame{
 		diceBlockButton3.setBounds(318, 440, 127, 25);
 		attackPanel.add(diceBlockButton3);
 		
+		JRadioButton doNothingButton3 = new JRadioButton("Do Nothing!");
+		doNothingButton3.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		doNothingButton3.setBounds(449, 444, 127, 25);
+		attackPanel.add(doNothingButton3);
+		
 		attackButtons3.add(hindranceButton3);
 		attackButtons3.add(luckyDiceButton3);
 		attackButtons3.add(diceBlockButton3);
-		
-		JLabel playerDicePairLabel = new JLabel("Your Dice Pairs");
-		playerDicePairLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		playerDicePairLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		playerDicePairLabel.setBounds(60, 168, 127, 16);
-		attackPanel.add(playerDicePairLabel);
+		attackButtons3.add(doNothingButton3);
 		
 		JButton attackButton = new JButton("Attack!");
 		attackButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		attackButton.setBounds(12, 433, 239, 54);
 		attackPanel.add(attackButton);
+		
+		JLabel attackPlayerError = new JLabel("Please enter a valid player to attack!");
+		attackPlayerError.setForeground(Color.RED);
+		attackPlayerError.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		attackPlayerError.setBounds(25, 402, 209, 25);
+		attackPanel.add(attackPlayerError);
+		
+		JLabel lblPlayerCurrentlyAttacking = new JLabel("Player " + playerCount + " Currently Attacking!");
+		playerCount++;
+		lblPlayerCurrentlyAttacking.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPlayerCurrentlyAttacking.setBounds(12, 236, 268, 30);
+		attackPanel.add(lblPlayerCurrentlyAttacking);
+		
+		attackPlayerError.setVisible(false);
 		
 		// end attack panel
 		
@@ -861,6 +908,16 @@ public class DiceGame{
 				DicePair threeDicePair = new DicePair(tempDice5 , tempDice6);
 				
 				gameDriver.getCurrPlayers().get(0).setDicePairs(oneDicePair, twoDicePair, threeDicePair);
+				
+				player1ScoreLabel.setText(gameDriver.getCurrPlayers().get(0).getName());
+				player2ScoreLabel.setText(gameDriver.getCurrPlayers().get(1).getName());
+				player3ScoreLabel.setText(gameDriver.getCurrPlayers().get(2).getName());
+				player4ScoreLabel.setText(gameDriver.getCurrPlayers().get(3).getName());
+				
+				player1Score.setText("" + gameDriver.getCurrPlayers().get(0).getScore());
+				player2Score.setText("" + gameDriver.getCurrPlayers().get(1).getScore());
+				player3Score.setText("" + gameDriver.getCurrPlayers().get(2).getScore());
+				player4Score.setText("" + gameDriver.getCurrPlayers().get(3).getScore());
 			}
 			
 		});
@@ -2618,7 +2675,98 @@ public class DiceGame{
 			
 		});
 		
+		// attack panel actions 
 		
+		attackButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				boolean player1 = false;
+				boolean player2 = false;
+				boolean player3 = false;
+				lblPlayerCurrentlyAttacking.setText("Player " + playerCount + " Currently Attacking!");
+				
+				for(int index = 0; index < gameDriver.getCurrPlayers().size(); index++)
+				{
+					if(attackPlayerTF1.getText().equals(gameDriver.getCurrPlayers().get(index).getName()))
+					{
+						player1 = true;
+					}
+					if(attackPlayerTF2.getText().equals(gameDriver.getCurrPlayers().get(index).getName()))
+					{
+						player2 = true;
+					}
+					if(attackPlayerTF2.getText().equals(gameDriver.getCurrPlayers().get(index).getName()))
+					{
+						player3 = true;
+					}
+				}
+				if(playerCount <= gameSize)
+				{
+					if(player3 && player2 && player1)
+					{
+						attackButtons1.clearSelection();
+						attackButtons2.clearSelection();
+						attackButtons3.clearSelection();
+						attackPlayerTF1.setText("");
+						attackPlayerTF2.setText("");
+						attackPlayerTF3.setText("");
+						attackPanel.setVisible(false);
+						pairDicePanel.setVisible(true);
+						attackPlayerError.setVisible(false);
+					}
+					else
+					{
+						attackPlayerError.setVisible(true);
+					}
+					playerCount++;
+				}
+				else
+				{
+					attackButtons1.clearSelection();
+					attackButtons2.clearSelection();
+					attackButtons3.clearSelection();
+					attackPlayerTF1.setText("");
+					attackPlayerTF2.setText("");
+					attackPlayerTF3.setText("");
+					attackPanel.setVisible(false);
+					turn2Panel.setVisible(true);
+					turnCount++;
+				}
+			}
+		});
+		
+		turn2Button.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				rollDicePanel.setVisible(true);
+				turn3Panel.setVisible(false);
+				
+				//Start Turn!
+				gameDriver.startATurn();
+				rerollDiceButton.setEnabled(false);
+				nextButton.setEnabled(false);
+								
+			}
+		});	
+		
+		turn3Button.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				rollDicePanel.setVisible(true);
+				turn3Panel.setVisible(false);
+				
+				//Start Turn!
+				gameDriver.startATurn();
+				rerollDiceButton.setEnabled(false);
+				nextButton.setEnabled(false);
+								
+			}
+		});	
+		
+			
 		
 	}
 	
