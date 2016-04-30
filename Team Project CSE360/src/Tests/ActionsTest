@@ -1,0 +1,34 @@
+package diceGame;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class ActionsTest {
+
+	@Test
+	public void testActions() {
+		Player user = new Player("name", 500);
+		Player recipient = new Player("name", 500);
+		Actions test = new Actions(user, recipient,0,0);
+		assertNotNull(test);
+	}
+	
+	@Test
+	public void testgetTestType(){
+		Player user = new Player("name", 500);
+		Player recipient = new Player("name", 500);
+		Actions test = new Actions(user, recipient,0,0);
+		assertEquals(test.getactionType(),0);
+	}
+	
+	@Test
+	public void testperform(){
+		Player user = new Player("name", 500);
+		Player recipient = new Player("name", 500);
+		Actions test = new Actions(user, recipient,0,0);
+		test.perform();
+		assertEquals(user.getScore(),400);
+	}
+	
+}
