@@ -2,14 +2,25 @@ package diceGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+/** Actions is the class that holds the actions that players can perform on other players.
+ * 
+ * @author Manuel Aguirre
+ * @version April 28, 2016.
+*/
 public class Actions {
 	
-	private Player user;
-	private Player recipient;
-	private int actionType;
-	private int roundNumber;
+	private Player user; //The player that will perform the action
+	private Player recipient; //The player that will have the action performed on them
+	private int actionType; //An int corresponding to the action being performed
+	private int roundNumber; //The round that the action is being performed in
 	
+	/**Actions is the constructor that takes a performer, a receiver, an actionNumber corresponding to the action type, and the round number
+	 * 
+	 * @param performer				the player using the action
+	 * @param receiver				the recipient of the action
+	 * @param actionNumber			an int corresponding to the action being used
+	 * @param roundNumber			the round the action is being performed in
+	 */
 	public Actions(Player performer, Player receiver, int actionNumber, int roundNumber){
 		user = performer;
 		recipient = receiver;
@@ -17,10 +28,17 @@ public class Actions {
 		roundNumber = roundNumber;
 	}
 	
+	/** returns the int corresponding to the action being used
+	 * 
+	 * @return actionType			an int corresponding to the action being used
+	 */
 	public int getactionType(){
 		return actionType;	
 	}
 	
+	/**perform is the method that calls the method for the action being used
+	 * 
+	 */
 	public void perform(){
 		switch(actionType){
 		case 0:		luckyDice();
@@ -33,8 +51,14 @@ public class Actions {
 		}
 	}
 	
+	/** Hinderance will cost 50 points and will subtract the sum of the user's two lowest dice from the targets dice sum for the selected round
+	 * 
+	 * @param currentRound			the round that hinderance will be used in
+	 */
 	public void Hinderance(int currentRound){
 		user.modifyScore(-50);
+		user.pointsSpentIncreased(50);
+		user.actionsUsedIncreased();
 		
 		if(!recipient.getSafe()){
 			int min1 = 7;
@@ -61,8 +85,15 @@ public class Actions {
 		}
 	}
 	
+	/** Dice Block will cost 125 points and will subtract the user's third and fourth lowest dice from the target's dice sum for the selected round
+	 * 
+	 * @param currentRound			the round that Dice Block will be used in
+	 */
 	public void diceBlock(int currentRound){
 		user.modifyScore(-125);
+		user.pointsSpentIncreased(125);
+		user.actionsUsedIncreased();
+
 		if(!recipient.getSafe()){
 			ArrayList<Integer> dice = new ArrayList<Integer>(6);
 			
@@ -80,8 +111,15 @@ public class Actions {
 		}
 		
 	}
+	
+	/**luckyDice will cost 100 points and will protect the user from any actions that someone else chooses to use on them for one round
+	 * 
+	 */
 	public void luckyDice(){
 		user.modifyScore(-100);
+		user.pointsSpentIncreased(100);
+		user.actionsUsedIncreased();
+		
 		user.setSafe(1);
 		
 	}
