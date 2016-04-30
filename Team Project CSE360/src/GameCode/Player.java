@@ -56,12 +56,21 @@ public class Player
 			actionsUsed = 0;
 			wonGame = 0;
 		}
-
+	
+		/** getScore will return the player's current score
+		*
+		*@return score				score is the player's current score
+		*/	
+		
+		public int getScore(){
+			return score;
+		}
+		
 		/** setScore will set local variable 'score' to the contents of the parameter inScore
 		*
 		*@param inScore				inScore is the player's current updated score
-		*/
-
+		*/		
+		
 		public void setScore(int inScore){
 			score = inScore;
 		}
@@ -159,14 +168,7 @@ public class Player
 			return pairRollValue;
 		}
 		
-		/** getScore will return the player's current score
-		*
-		*@return score				score is the player's current score
-		*/	
-		
-		public int getScore(){
-			return score;
-		}
+
 		
 		/** getDicePairs will return the array that holds the player's DicePairs
 		*
