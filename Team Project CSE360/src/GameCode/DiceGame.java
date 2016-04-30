@@ -1,4 +1,4 @@
-package cse360proj1;
+package cse360proj1Test;
 
 import java.awt.EventQueue;
 
@@ -25,7 +25,7 @@ import java.awt.Scrollbar;
 
 public class DiceGame{
 
-	JFrame frame;
+	private JFrame frame;
 	private JTextField playerNameTF;
 	private JTextField pairDiceOne1;
 	private JTextField pairDiceTwo1;
@@ -37,16 +37,19 @@ public class DiceGame{
 	private JTextField attackPlayerTF2;
 	private JTextField attackPlayerTF3;
 	private int gameSize = 0;
-	private int playerTurn = 0;
 	//private boolean twoPlayers;
 	//private boolean threePlayers;
 	//private boolean fourPlayers;
 	//private int beginPanelIndex;
 	//private boolean beginPanelCheck = true;
+
+	//Set up Driver
 	GameDriver gameDriver = new GameDriver();
+	
 	
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,6 +66,7 @@ public class DiceGame{
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public DiceGame() {
 		initialize();
@@ -76,6 +80,8 @@ public class DiceGame{
 		frame.setBounds(100, 100, 739, 547);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		//ImageIcon dice1Icon = new ImageIcon(getClass().getResource("C:\\Users\\Marqwon\\Desktop\\Dice Game 1.png"));
 		
 		// end player count panel
 		
@@ -108,7 +114,7 @@ public class DiceGame{
 		instructionLabel.setBounds(148, 292, 404, 42);
 		welcomePanel.add(instructionLabel);
 		
-		JLabel tooLittleErrorLabel = new JLabel("Game must have at least 2 players!");
+		JLabel tooLittleErrorLabel = new JLabel("Game must have at least 1 player!");
 		tooLittleErrorLabel.setForeground(Color.RED);
 		tooLittleErrorLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		tooLittleErrorLabel.setBounds(406, 361, 264, 27);
@@ -266,32 +272,32 @@ public class DiceGame{
 		
 		JLabel die1ImageLabel = new JLabel("Die 1");
 		die1ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die1ImageLabel.setBounds(12, 13, 125, 113);
+		die1ImageLabel.setBounds(70, 13, 125, 113);
 		rollDicePanel.add(die1ImageLabel);
 		
 		JLabel die2ImageLabel = new JLabel("Die 2");
 		die2ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die2ImageLabel.setBounds(149, 13, 125, 113);
+		die2ImageLabel.setBounds(273, 13, 125, 113);
 		rollDicePanel.add(die2ImageLabel);
 		
 		JLabel die3ImageLabel = new JLabel("Die 3");
 		die3ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die3ImageLabel.setBounds(286, 13, 125, 113);
+		die3ImageLabel.setBounds(469, 13, 125, 113);
 		rollDicePanel.add(die3ImageLabel);
 		
 		JLabel die4ImageLabel = new JLabel("Die 4");
 		die4ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die4ImageLabel.setBounds(0, 164, 125, 113);
+		die4ImageLabel.setBounds(70, 164, 125, 113);
 		rollDicePanel.add(die4ImageLabel);
 		
 		JLabel die5ImageLabel = new JLabel("Die 5");
 		die5ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die5ImageLabel.setBounds(149, 164, 125, 113);
+		die5ImageLabel.setBounds(273, 164, 125, 113);
 		rollDicePanel.add(die5ImageLabel);
 		
 		JLabel die6ImageLabel = new JLabel("Die 6");
 		die6ImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		die6ImageLabel.setBounds(286, 164, 125, 113);
+		die6ImageLabel.setBounds(469, 164, 125, 113);
 		rollDicePanel.add(die6ImageLabel);
 		
 		JButton rerollDiceButton = new JButton("Re-Roll");
@@ -372,11 +378,10 @@ public class DiceGame{
 		pairButton.setBounds(12, 349, 195, 63);
 		pairDicePanel.add(pairButton);
 		
-		JLabel diceToPairLabel = new JLabel("Dice to pair:");
-		diceToPairLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		diceToPairLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		diceToPairLabel.setBounds(405, 83, 141, 22);
-		pairDicePanel.add(diceToPairLabel);
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel.setBounds(405, 83, 56, 16);
+		pairDicePanel.add(lblNewLabel);
 		
 		JLabel dicePairError1Label = new JLabel("Check your dice pairs!");
 		dicePairError1Label.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -619,11 +624,14 @@ public class DiceGame{
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if(gameSize >= 2)
+				if(gameSize >= 1)
 				{
 					//tooLittleErrorLabel.setVisible(false);
 					turn1Panel.setVisible(true);
 					welcomePanel.setVisible(false);
+					
+					//Fill up with computers. 
+					gameDriver.addComputerPlayers();
 				}
 				else
 				{
@@ -642,6 +650,12 @@ public class DiceGame{
 			{
 				rollDicePanel.setVisible(true);
 				turn1Panel.setVisible(false);
+				
+				//Start Turn!
+				gameDriver.startATurn();
+				rerollDiceButton.setEnabled(false);
+				nextButton.setEnabled(false);
+								
 			}
 		});	
 		
@@ -666,22 +680,36 @@ public class DiceGame{
 						player1NameLabel.setText(playerNameTF.getText());
 						player1Label.setVisible(true);
 						player1NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
 					}
 					if(gameSize == 2)
 					{
 						player2NameLabel.setText(playerNameTF.getText());
 						player2Label.setVisible(true);
 						player2NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
+						
 					}if(gameSize == 3)
 					{
 						player3NameLabel.setText(playerNameTF.getText());
 						player3Label.setVisible(true);
 						player3NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
+						
 					}if(gameSize == 4)
 					{
 						player4NameLabel.setText(playerNameTF.getText());
 						player4Label.setVisible(true);
 						player4NameLabel.setVisible(true);
+						
+						//Create New Player Object
+						gameDriver.addPlayer(new Player(playerNameTF.getText(), 500));
 					}
 					
 					playerNameTF.setText("");
@@ -709,6 +737,38 @@ public class DiceGame{
 				die4ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 3));
 				die5ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 4));
 				die6ImageLabel.setText(gameDriver.getDiceListRoll(gameDriver.getCurrPlayers().get(0), 5));
+				
+				if(die1ImageLabel.getText().equals(1))
+				{
+					die1ImageLabel.setIcon(new ImageIcon("C:\\Users\\Marqwon\\Desktop\\DiceGame1.png"));
+					die1ImageLabel.validate();
+				}
+				else if(die2ImageLabel.getText().equals(2))
+				{
+					die2ImageLabel.setIcon(new ImageIcon("C:\\Users\\Marqwon\\Desktop\\DiceGame2.png"));
+					die2ImageLabel.validate();
+				}
+				else if(die3ImageLabel.getText().equals(3))
+				{
+					die3ImageLabel.setIcon(new ImageIcon("C:\\Users\\Marqwon\\Desktop\\DiceGame3.png"));
+					die3ImageLabel.validate();
+				}
+				else if(die4ImageLabel.getText().equals(4))
+				{
+					die4ImageLabel.setIcon(new ImageIcon("C:\\Users\\Marqwon\\Desktop\\DiceGame4.png"));
+					die4ImageLabel.validate();
+				}
+				else if(die5ImageLabel.getText().equals(5))
+				{
+					die5ImageLabel.setIcon(new ImageIcon("C:\\Users\\Marqwon\\Desktop\\DiceGame5.png"));
+					die5ImageLabel.validate();
+				}
+				else if(die6ImageLabel.getText().equals(6))
+				{
+					die6ImageLabel.setIcon(new ImageIcon("C:\\Users\\Marqwon\\Desktop\\DiceGame6.png"));
+					die6ImageLabel.validate();
+				}
+				
 
 				rerollDiceButton.setEnabled(true);
 				nextButton.setEnabled(true);
@@ -732,110 +792,81 @@ public class DiceGame{
 				rerollDiceButton.setEnabled(false);
 				
 			}
-		});
-		
+		});		
 		// begin pair dice panel actions
 		
 		pairButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				while(playerTurn < gameSize)
+				if(pairDiceOne1.getText().equals("") || pairDiceTwo1.getText().equals("") || (pairDiceOne1.getText().equals("") && pairDiceTwo1.getText().equals("")))
 				{
-					if(pairDiceOne1.getText().equals("") || pairDiceTwo1.getText().equals("") || (pairDiceOne1.getText().equals("") && pairDiceTwo1.getText().equals("")))
-					{
-						blankDicePair1ErrorLabel.setVisible(true);
-					}
-					else
-					{
-						blankDicePair1ErrorLabel.setVisible(false);
-					}
-					if(pairDiceOne2.getText().equals("") || pairDiceTwo2.getText().equals("") || (pairDiceOne2.getText().equals("") && pairDiceTwo2.getText().equals("")))
-					{
-						blankDicePair2ErrorLabel.setVisible(true);
-					}	
-					else
-					{
-						blankDicePair2ErrorLabel.setVisible(false);	
-					}	
-					if(pairDiceOne3.getText().equals("") || pairDiceTwo3.getText().equals("") || (pairDiceOne3.getText().equals("") && pairDiceTwo3.getText().equals("")))
-					{
-						blankDicePair3ErrorLabel.setVisible(true);
-					}		
-					else
-					{
-						blankDicePair3ErrorLabel.setVisible(false);	
-					}
-					
-					if(pairDiceOne1.getText().equals(pairDiceTwo1.getText()) || 
-					   pairDiceOne1.getText().equals(pairDiceOne2.getText())  ||
-				       pairDiceOne1.getText().equals(pairDiceTwo2.getText())  ||
-				       pairDiceOne1.getText().equals(pairDiceOne3.getText())  ||
-				       pairDiceOne1.getText().equals(pairDiceTwo3.getText()))
-					{
-						dicePairError1Label.setVisible(true);
-						dicePairError2Label.setVisible(true);	   
-					}
-					else if(pairDiceTwo1.getText().equals(pairDiceOne1.getText()) || 
-							pairDiceTwo1.getText().equals(pairDiceOne2.getText()) ||
-							pairDiceTwo1.getText().equals(pairDiceTwo2.getText()) ||
-							pairDiceTwo1.getText().equals(pairDiceOne3.getText()) ||
-							pairDiceTwo1.getText().equals(pairDiceTwo3.getText()))
-					{
-						dicePairError1Label.setVisible(true);
-					    dicePairError2Label.setVisible(true);	   
-					}
-					else if(pairDiceOne2.getText().equals(pairDiceOne1.getText()) || 
-							pairDiceOne2.getText().equals(pairDiceTwo1.getText()) ||
-							pairDiceOne2.getText().equals(pairDiceTwo2.getText()) ||
-							pairDiceOne2.getText().equals(pairDiceOne3.getText()) ||
-							pairDiceOne2.getText().equals(pairDiceTwo3.getText()))
-					{
+					blankDicePair1ErrorLabel.setVisible(true);
+				}
+				if(pairDiceOne2.getText().equals("") || pairDiceTwo2.getText().equals("") || (pairDiceOne2.getText().equals("") && pairDiceTwo2.getText().equals("")))
+				{
+					blankDicePair2ErrorLabel.setVisible(true);
+				}
+				if(pairDiceOne3.getText().equals("") || pairDiceTwo3.getText().equals("") || (pairDiceOne3.getText().equals("") && pairDiceTwo3.getText().equals("")))
+				{
+					blankDicePair3ErrorLabel.setVisible(true);
+				}
+				if(pairDiceOne1.getText().equals(pairDiceTwo1.getText()) || 
+				   pairDiceOne1.getText().equals(pairDiceOne2.getText())  ||
+				   pairDiceOne1.getText().equals(pairDiceTwo2.getText())  ||
+				   pairDiceOne1.getText().equals(pairDiceOne3.getText())  ||
+				   pairDiceOne1.getText().equals(pairDiceTwo3.getText()))
+				{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-					}
-					else if(pairDiceTwo2.getText().equals(pairDiceOne1.getText()) || 
-							pairDiceTwo2.getText().equals(pairDiceTwo1.getText()) ||
-							pairDiceTwo2.getText().equals(pairDiceOne2.getText()) ||
-							pairDiceTwo2.getText().equals(pairDiceOne3.getText()) ||
-							pairDiceTwo2.getText().equals(pairDiceTwo3.getText()))
-					{
+				}
+				if(pairDiceTwo1.getText().equals(pairDiceOne1.getText()) || 
+				   pairDiceTwo1.getText().equals(pairDiceOne2.getText()) ||
+				   pairDiceTwo1.getText().equals(pairDiceTwo2.getText()) ||
+				   pairDiceTwo1.getText().equals(pairDiceOne3.getText()) ||
+				   pairDiceTwo1.getText().equals(pairDiceTwo3.getText()))
+				{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-					}
-					else if(pairDiceOne3.getText().equals(pairDiceOne1.getText()) || 
-							pairDiceOne3.getText().equals(pairDiceTwo1.getText()) ||
-							pairDiceOne3.getText().equals(pairDiceOne2.getText()) ||
-							pairDiceOne3.getText().equals(pairDiceTwo2.getText()) ||
-							pairDiceOne3.getText().equals(pairDiceTwo3.getText()))
-					{
+				}
+				if(pairDiceOne2.getText().equals(pairDiceOne1.getText()) || 
+				   pairDiceOne2.getText().equals(pairDiceTwo1.getText()) ||
+				   pairDiceOne2.getText().equals(pairDiceTwo2.getText()) ||
+				   pairDiceOne2.getText().equals(pairDiceOne3.getText()) ||
+				   pairDiceOne2.getText().equals(pairDiceTwo3.getText()))
+				{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-					}
-					else if(pairDiceTwo3.getText().equals(pairDiceOne1.getText()) || 
-							pairDiceTwo3.getText().equals(pairDiceTwo1.getText()) ||
-							pairDiceTwo3.getText().equals(pairDiceOne2.getText()) ||
-							pairDiceTwo3.getText().equals(pairDiceTwo2.getText()) ||
-							pairDiceTwo3.getText().equals(pairDiceOne3.getText()))
-					{
+				}
+				if(pairDiceTwo2.getText().equals(pairDiceOne1.getText()) || 
+				   pairDiceTwo2.getText().equals(pairDiceTwo1.getText()) ||
+				   pairDiceTwo2.getText().equals(pairDiceOne2.getText()) ||
+				   pairDiceTwo2.getText().equals(pairDiceOne3.getText()) ||
+				   pairDiceTwo2.getText().equals(pairDiceTwo3.getText()))
+				{
 					   dicePairError1Label.setVisible(true);
 					   dicePairError2Label.setVisible(true);	   
-					}
-					else
-					{
-						playerTurn++;
-						blankDicePair1ErrorLabel.setVisible(false);
-						blankDicePair2ErrorLabel.setVisible(false);
-						blankDicePair3ErrorLabel.setVisible(false);
-						dicePairError1Label.setVisible(false);
-						dicePairError2Label.setVisible(false);
-						pairDicePanel.validate();
-						pairDicePanel.repaint();
-					}
+				}
+				if(pairDiceOne3.getText().equals(pairDiceOne1.getText()) || 
+				   pairDiceOne3.getText().equals(pairDiceTwo1.getText()) ||
+				   pairDiceOne3.getText().equals(pairDiceTwo2.getText()) ||
+				   pairDiceOne3.getText().equals(pairDiceOne3.getText()) ||
+				   pairDiceOne3.getText().equals(pairDiceTwo3.getText()))
+				{
+					   dicePairError1Label.setVisible(true);
+					   dicePairError2Label.setVisible(true);	   
 				}
 			}
 		});
 		
+		nextButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				rollDicePanel.setVisible(false);
+				pairDicePanel.setVisible(true);
+			}
+		});
 			
 	}
 }
