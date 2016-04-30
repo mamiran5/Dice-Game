@@ -1,5 +1,13 @@
 package diceGame;
 
+/** The HighScoreStats class creates files containing player information as well as
+ *  the rankings file that contains every player's statistics for whoever has ever
+ *  played the game. Also updates the stats of players if they play the game again.
+ *  
+ * @author Michael Saul
+ * @version April 29, 2016.
+*/
+
 import java.io.*;
 import java.util.*;
 
@@ -72,6 +80,11 @@ public class HighScoreStats {
 		}
 		
 	}
+	
+	/** Rankings - Creates a text file called "rankings.txt" that holds the ranking for every player that has played the game. It is organized based on game win ratio.
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	
 	public void Rankings() throws FileNotFoundException{
 		File rankFile = new File("rankings.txt");
@@ -157,6 +170,12 @@ public class HighScoreStats {
 		
 	}
 	
+	/** createPlayerFile - Creates a file for a player if they have not played the game before given their end results of the current game
+	 * 
+	 * @param playerInfo - Passes a player that gives information on the player for the current game
+	 * @throws FileNotFoundException
+	 */
+	
 	public void createPlayerFile(Player playerInfo) throws FileNotFoundException{
 		PrintWriter writer = new PrintWriter(playerInfo.getName() + ".txt");
 	    
@@ -172,6 +191,12 @@ public class HighScoreStats {
 		
 		writer.close();
 	}
+	
+	/** updatePlayerFile - Updates an existing player file given the current game's results and the player's previous stats from the file.
+	 * 
+	 * @param playerInfo - Passes a player that gives information on the player for the current game
+	 * @throws FileNotFoundException
+	 */
 	
 	public void updatePlayerFile(Player playerInfo) throws FileNotFoundException{
 		File playerFile = new File (playerInfo.getName() + ".txt");
