@@ -48,6 +48,8 @@ public class DiceGame{
 	int[] pairList = new int[6];
 	int pairsSelected = 0;
 	
+	boolean[] diceDisabled = new boolean[6];
+	
 	/**
 	 * Launch the application.
 	 * @wbp.parser.entryPoint
@@ -411,8 +413,9 @@ public class DiceGame{
 		pairDicePanel.add(dice6Selected);
 		
 		JLabel lblPair = new JLabel("Choose Pair 1!");
+		lblPair.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPair.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblPair.setBounds(402, 282, 132, 22);
+		lblPair.setBounds(261, 282, 398, 22);
 		pairDicePanel.add(lblPair);
 		
 		JLabel pairLabel1a = new JLabel("#");
@@ -832,9 +835,32 @@ public class DiceGame{
 		{
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(ActionEvent e) 
+			{
+				pairDicePanel.setVisible(false);
+				attackPanel.setVisible(true);
 				
+				Dice tempDice1 = new Dice(6);
+				Dice tempDice2 = new Dice(6);
+				Dice tempDice3 = new Dice(6);
+				Dice tempDice4 = new Dice(6);
+				Dice tempDice5 = new Dice(6);
+				Dice tempDice6 = new Dice(6);
+				
+				tempDice1.setValue(pairList[0]);
+				tempDice2.setValue(pairList[1]);
+				tempDice3.setValue(pairList[2]);
+				tempDice4.setValue(pairList[3]);
+				tempDice5.setValue(pairList[4]);
+				tempDice6.setValue(pairList[5]);
+				
+				
+				
+				DicePair oneDicePair = new DicePair(tempDice1 , tempDice2);
+				DicePair twoDicePair = new DicePair(tempDice3 , tempDice4);
+				DicePair threeDicePair = new DicePair(tempDice5 , tempDice6);
+				
+				gameDriver.getCurrPlayers().get(0).setDicePairs(oneDicePair, twoDicePair, threeDicePair);
 			}
 			
 		});
@@ -884,11 +910,13 @@ public class DiceGame{
 				if (pairToggleCount == 2 && pairsSelected == 0)
 				{
 					btnLockInPair.setEnabled(false);
+					pairsSelected++;
 					lblPair.setText("Choose Pair 2! ");
 					
 					if (diceToggle[0] == true )
 					{
 						dice1Selected.setVisible(false);
+						diceDisabled[0] = true;
 						btnDice1.setVisible(false);
 						
 					}
@@ -900,6 +928,7 @@ public class DiceGame{
 					if (diceToggle[1] == true )
 					{
 						dice2Selected.setVisible(false);
+						diceDisabled[1] = true;
 						btnDice2.setVisible(false);
 					}
 					else
@@ -910,6 +939,7 @@ public class DiceGame{
 					if (diceToggle[2] == true )
 					{
 						dice3Selected.setVisible(false);
+						diceDisabled[2] = true;
 						btnDice3.setVisible(false);
 					}
 					else
@@ -920,6 +950,7 @@ public class DiceGame{
 					if (diceToggle[3] == true )
 					{
 						dice4Selected.setVisible(false);
+						diceDisabled[3] = true;
 						btnDice4.setVisible(false);
 					}
 					else
@@ -930,6 +961,7 @@ public class DiceGame{
 					if (diceToggle[4] == true )
 					{
 						dice5Selected.setVisible(false);
+						diceDisabled[4] = true;
 						btnDice5.setVisible(false);
 					}
 					else 
@@ -940,17 +972,165 @@ public class DiceGame{
 					if (diceToggle[5] == true )
 					{
 						dice6Selected.setVisible(false);
+						diceDisabled[5] = true;
+						btnDice6.setVisible(false);
+					}
+					else
+					{
+						btnDice6.setEnabled(true);
+					}	
+				}
+				else if (pairToggleCount == 4 && pairsSelected == 1)
+				{
+					btnLockInPair.setEnabled(false);
+					pairsSelected++;
+					lblPair.setText("Choose Pair 3! ");
+					
+					if (diceToggle[0] == true )
+					{
+						dice1Selected.setVisible(false);
+						diceDisabled[0] = true;
+						btnDice1.setVisible(false);
+						
+					}
+					else
+					{
+						btnDice1.setEnabled(true);
+					}
+					
+					if (diceToggle[1] == true )
+					{
+						dice2Selected.setVisible(false);
+						diceDisabled[1] = true;
+						btnDice2.setVisible(false);
+					}
+					else
+					{
+						btnDice2.setEnabled(true);
+					}
+					
+					if (diceToggle[2] == true )
+					{
+						dice3Selected.setVisible(false);
+						diceDisabled[2] = true;
+						btnDice3.setVisible(false);
+					}
+					else
+					{
+						btnDice3.setEnabled(true);
+					}
+					
+					if (diceToggle[3] == true )
+					{
+						dice4Selected.setVisible(false);
+						diceDisabled[3] = true;
+						btnDice4.setVisible(false);
+					}
+					else
+					{
+						btnDice4.setEnabled(true);
+					}
+					
+					if (diceToggle[4] == true )
+					{
+						dice5Selected.setVisible(false);
+						diceDisabled[4] = true;
+						btnDice5.setVisible(false);
+					}
+					else 
+					{
+						btnDice5.setEnabled(true);
+					}
+					
+					if (diceToggle[5] == true )
+					{
+						dice6Selected.setVisible(false);
+						diceDisabled[5] = true;
 						btnDice6.setVisible(false);
 					}
 					else
 					{
 						btnDice6.setEnabled(true);
 					}
-						
-					
+
 				}
+				else if (pairToggleCount == 6 && pairsSelected == 2)
+				{
+					btnLockInPair.setEnabled(false);
+					pairsSelected++;
+					lblPair.setText("PAIRS COMPLETE! ");
+					pairDoneButton.setEnabled(true);
+					
+					if (diceToggle[0] == true )
+					{
+						dice1Selected.setVisible(false);
+						diceDisabled[0] = true;
+						btnDice1.setVisible(false);
+						
+					}
+					else
+					{
+						btnDice1.setEnabled(true);
+					}
+					
+					if (diceToggle[1] == true )
+					{
+						dice2Selected.setVisible(false);
+						diceDisabled[1] = true;
+						btnDice2.setVisible(false);
+					}
+					else
+					{
+						btnDice2.setEnabled(true);
+					}
+					
+					if (diceToggle[2] == true )
+					{
+						dice3Selected.setVisible(false);
+						diceDisabled[2] = true;
+						btnDice3.setVisible(false);
+					}
+					else
+					{
+						btnDice3.setEnabled(true);
+					}
+					
+					if (diceToggle[3] == true )
+					{
+						dice4Selected.setVisible(false);
+						diceDisabled[3] = true;
+						btnDice4.setVisible(false);
+					}
+					else
+					{
+						btnDice4.setEnabled(true);
+					}
+					
+					if (diceToggle[4] == true )
+					{
+						dice5Selected.setVisible(false);
+						diceDisabled[4] = true;
+						btnDice5.setVisible(false);
+					}
+					else 
+					{
+						btnDice5.setEnabled(true);
+					}
+					
+					if (diceToggle[5] == true )
+					{
+						dice6Selected.setVisible(false);
+						diceDisabled[5] = true;
+						btnDice6.setVisible(false);
+					}
+					else
+					{
+						btnDice6.setEnabled(true);
+					}
+
+				}
+
 			}
-			
 		});
 		
 		/**Dice buttons
@@ -1071,7 +1251,65 @@ public class DiceGame{
 					//Check the number of checked buttons
 					toggleCounter();
 					
-					if (pairToggleCount == 2)
+					if (pairToggleCount == 2 && pairsSelected == 0)
+					{
+						btnLockInPair.setEnabled(true);
+						
+						if (diceToggle[0] == false)
+						{
+							btnDice1.setEnabled(false);
+						}
+						if (diceToggle[1] == false)
+						{
+							btnDice2.setEnabled(false);
+						}
+						if (diceToggle[2] == false)
+						{
+							btnDice3.setEnabled(false);
+						}
+						if (diceToggle[3] == false)
+						{
+							btnDice4.setEnabled(false);
+						}
+						if (diceToggle[4] == false)
+						{
+							btnDice5.setEnabled(false);
+						}
+						if (diceToggle[5] == false)
+						{
+							btnDice6.setEnabled(false);
+						}
+					}
+					else if (pairToggleCount == 4 && pairsSelected == 1)
+					{
+						btnLockInPair.setEnabled(true);
+						
+						if (diceToggle[0] == false)
+						{
+							btnDice1.setEnabled(false);
+						}
+						if (diceToggle[1] == false)
+						{
+							btnDice2.setEnabled(false);
+						}
+						if (diceToggle[2] == false)
+						{
+							btnDice3.setEnabled(false);
+						}
+						if (diceToggle[3] == false)
+						{
+							btnDice4.setEnabled(false);
+						}
+						if (diceToggle[4] == false)
+						{
+							btnDice5.setEnabled(false);
+						}
+						if (diceToggle[5] == false)
+						{
+							btnDice6.setEnabled(false);
+						}
+					}
+					else if (pairToggleCount == 6 && pairsSelected == 2)
 					{
 						btnLockInPair.setEnabled(true);
 						
@@ -1103,13 +1341,51 @@ public class DiceGame{
 					else
 					{
 						btnLockInPair.setEnabled(false);
-						btnDice1.setEnabled(true);
-						btnDice2.setEnabled(true);
-						btnDice3.setEnabled(true);
-						btnDice4.setEnabled(true);
-						btnDice5.setEnabled(true);
-						btnDice6.setEnabled(true);
+						
+						if (diceDisabled[0] == false)
+							btnDice1.setEnabled(true);
+						if (diceDisabled[1] == false)
+							btnDice2.setEnabled(true);
+						if (diceDisabled[2] == false)
+							btnDice3.setEnabled(true);
+						if (diceDisabled[3] == false)
+							btnDice4.setEnabled(true);
+						if (diceDisabled[4] == false)
+							btnDice5.setEnabled(true);
+						if (diceDisabled[5] == false)
+							btnDice6.setEnabled(true);
 					}
+					
+				if (diceDisabled[0] == true)
+					{
+						dice1Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[1] == true)
+					{
+						dice2Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[2] == true)
+					{
+						dice3Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[3] == true)
+					{
+						dice4Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[4] == true)
+					{
+						dice5Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[5] == true)
+					{
+						dice6Selected.setVisible(false);
+					}
+
 			}
 		});
 		
@@ -1219,7 +1495,65 @@ public class DiceGame{
 				
 				toggleCounter();
 				
-				if (pairToggleCount == 2)
+				if (pairToggleCount == 2 && pairsSelected == 0)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else if (pairToggleCount == 4 && pairsSelected == 1)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else if (pairToggleCount == 6 && pairsSelected == 2)
 				{
 					btnLockInPair.setEnabled(true);
 					
@@ -1251,14 +1585,52 @@ public class DiceGame{
 				else
 				{
 					btnLockInPair.setEnabled(false);
-					btnDice1.setEnabled(true);
-					btnDice2.setEnabled(true);
-					btnDice3.setEnabled(true);
-					btnDice4.setEnabled(true);
-					btnDice5.setEnabled(true);
-					btnDice6.setEnabled(true);
+					
+					if (diceDisabled[0] == false)
+						btnDice1.setEnabled(true);
+					if (diceDisabled[1] == false)
+						btnDice2.setEnabled(true);
+					if (diceDisabled[2] == false)
+						btnDice3.setEnabled(true);
+					if (diceDisabled[3] == false)
+						btnDice4.setEnabled(true);
+					if (diceDisabled[4] == false)
+						btnDice5.setEnabled(true);
+					if (diceDisabled[5] == false)
+						btnDice6.setEnabled(true);
 				}
 				
+				
+			if (diceDisabled[0] == true)
+				{
+					dice1Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[1] == true)
+				{
+					dice2Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[2] == true)
+				{
+					dice3Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[3] == true)
+				{
+					dice4Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[4] == true)
+				{
+					dice5Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[5] == true)
+				{
+					dice6Selected.setVisible(false);
+				}
+
 			}
 		});
 		
@@ -1399,17 +1771,111 @@ public class DiceGame{
 						btnDice6.setEnabled(false);
 					}
 				}
+				else if (pairToggleCount == 4 && pairsSelected == 1)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else if (pairToggleCount == 6 && pairsSelected == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
 				else
 				{
 					btnLockInPair.setEnabled(false);
-					btnDice1.setEnabled(true);
-					btnDice2.setEnabled(true);
-					btnDice3.setEnabled(true);
-					btnDice4.setEnabled(true);
-					btnDice5.setEnabled(true);
-					btnDice6.setEnabled(true);
+					if (diceDisabled[0] == false)
+						btnDice1.setEnabled(true);
+					if (diceDisabled[1] == false)
+						btnDice2.setEnabled(true);
+					if (diceDisabled[2] == false)
+						btnDice3.setEnabled(true);
+					if (diceDisabled[3] == false)
+						btnDice4.setEnabled(true);
+					if (diceDisabled[4] == false)
+						btnDice5.setEnabled(true);
+					if (diceDisabled[5] == false)
+						btnDice6.setEnabled(true);
 				}
-				
+			
+			if (diceDisabled[0] == true)
+				{
+					dice1Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[1] == true)
+				{
+					dice2Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[2] == true)
+				{
+					dice3Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[3] == true)
+				{
+					dice4Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[4] == true)
+				{
+					dice5Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[5] == true)
+				{
+					dice6Selected.setVisible(false);
+				}
+
 			}
 			
 		});
@@ -1550,16 +2016,111 @@ public class DiceGame{
 						btnDice6.setEnabled(false);
 					}
 				}
+				else if (pairToggleCount == 4 && pairsSelected == 1)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else if (pairToggleCount == 6 && pairsSelected == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
 				else
 				{
 					btnLockInPair.setEnabled(false);
-					btnDice1.setEnabled(true);
-					btnDice2.setEnabled(true);
-					btnDice3.setEnabled(true);
-					btnDice4.setEnabled(true);
-					btnDice5.setEnabled(true);
-					btnDice6.setEnabled(true);
+					if (diceDisabled[0] == false)
+						btnDice1.setEnabled(true);
+					if (diceDisabled[1] == false)
+						btnDice2.setEnabled(true);
+					if (diceDisabled[2] == false)
+						btnDice3.setEnabled(true);
+					if (diceDisabled[3] == false)
+						btnDice4.setEnabled(true);
+					if (diceDisabled[4] == false)
+						btnDice5.setEnabled(true);
+					if (diceDisabled[5] == false)
+						btnDice6.setEnabled(true);
 				}
+				
+			if (diceDisabled[0] == true)
+				{
+					dice1Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[1] == true)
+				{
+					dice2Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[2] == true)
+				{
+					dice3Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[3] == true)
+				{
+					dice4Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[4] == true)
+				{
+					dice5Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[5] == true)
+				{
+					dice6Selected.setVisible(false);
+				}
+
 				
 			}
 		});
@@ -1702,16 +2263,111 @@ public class DiceGame{
 						btnDice6.setEnabled(false);
 					}
 				}
+				else if (pairToggleCount == 4 && pairsSelected == 1)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else if (pairToggleCount == 6 && pairsSelected == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
 				else
 				{
 					btnLockInPair.setEnabled(false);
-					btnDice1.setEnabled(true);
-					btnDice2.setEnabled(true);
-					btnDice3.setEnabled(true);
-					btnDice4.setEnabled(true);
-					btnDice5.setEnabled(true);
-					btnDice6.setEnabled(true);
+					if (diceDisabled[0] == false)
+						btnDice1.setEnabled(true);
+					if (diceDisabled[1] == false)
+						btnDice2.setEnabled(true);
+					if (diceDisabled[2] == false)
+						btnDice3.setEnabled(true);
+					if (diceDisabled[3] == false)
+						btnDice4.setEnabled(true);
+					if (diceDisabled[4] == false)
+						btnDice5.setEnabled(true);
+					if (diceDisabled[5] == false)
+						btnDice6.setEnabled(true);
 				}
+				
+			if (diceDisabled[0] == true)
+				{
+					dice1Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[1] == true)
+				{
+					dice2Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[2] == true)
+				{
+					dice3Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[3] == true)
+				{
+					dice4Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[4] == true)
+				{
+					dice5Selected.setVisible(false);
+				}
+			
+			if (diceDisabled[5] == true)
+				{
+					dice6Selected.setVisible(false);
+				}
+
 			}
 		});
 		
@@ -1852,17 +2508,111 @@ public class DiceGame{
 						btnDice6.setEnabled(false);
 					}
 				}
+				else if (pairToggleCount == 4 && pairsSelected == 1)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
+				else if (pairToggleCount == 6 && pairsSelected == 2)
+				{
+					btnLockInPair.setEnabled(true);
+					
+					if (diceToggle[0] == false)
+					{
+						btnDice1.setEnabled(false);
+					}
+					if (diceToggle[1] == false)
+					{
+						btnDice2.setEnabled(false);
+					}
+					if (diceToggle[2] == false)
+					{
+						btnDice3.setEnabled(false);
+					}
+					if (diceToggle[3] == false)
+					{
+						btnDice4.setEnabled(false);
+					}
+					if (diceToggle[4] == false)
+					{
+						btnDice5.setEnabled(false);
+					}
+					if (diceToggle[5] == false)
+					{
+						btnDice6.setEnabled(false);
+					}
+				}
 				else
 				{
 					btnLockInPair.setEnabled(false);
 					
-					btnDice1.setEnabled(true);
-					btnDice2.setEnabled(true);
-					btnDice3.setEnabled(true);
-					btnDice4.setEnabled(true);
-					btnDice5.setEnabled(true);
-					btnDice6.setEnabled(true);
+					if (diceDisabled[0] == false)
+						btnDice1.setEnabled(true);
+					if (diceDisabled[1] == false)
+						btnDice2.setEnabled(true);
+					if (diceDisabled[2] == false)
+						btnDice3.setEnabled(true);
+					if (diceDisabled[3] == false)
+						btnDice4.setEnabled(true);
+					if (diceDisabled[4] == false)
+						btnDice5.setEnabled(true);
+					if (diceDisabled[5] == false)
+						btnDice6.setEnabled(true);
 				}
+				
+				if (diceDisabled[0] == true)
+					{
+						dice1Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[1] == true)
+					{
+						dice2Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[2] == true)
+					{
+						dice3Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[3] == true)
+					{
+						dice4Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[4] == true)
+					{
+						dice5Selected.setVisible(false);
+					}
+				
+				if (diceDisabled[5] == true)
+					{
+						dice6Selected.setVisible(false);
+					}
 			}
 			
 			
