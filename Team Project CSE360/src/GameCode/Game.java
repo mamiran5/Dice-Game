@@ -27,7 +27,7 @@ public class Game {
 			System.out.println("Please enter the number of players that will participate in the game!");
 			playerNum = in.nextInt();
 			
-			if(playerNum >= 1 || playerNum <= 4){
+			if(playerNum >= 1 && playerNum <= 4){
 				playersAllowed = true;
 			}
 		}
