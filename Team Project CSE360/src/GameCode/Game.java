@@ -1,14 +1,22 @@
 package diceGame;
-import java.io.IOException;
-/** Game is the driver
+
+/** The Game class contains the methods that decide the winner of the game based on score
+ *  as well as based on a final dice roll of all 6 dice added together in the case of a tie.
+ *  In addition, this method adds Players to a list of players that will be used to keep track
+ *  of everyone's score and dice rolls. This class also contains a method to print out who the
+ *  winner of the game is.
+ *  
  * @author Michael Saul
- * @version April 15, 2016.
+ * @version April 25, 2016.
 */
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Game {
 	
-	public static void main (String [] args) throws IOException{
+	public static void main (String [] args) throws FileNotFoundException{
 		Scanner in = new Scanner(System.in);
 		
 		System.out.println("Please enter the number of turns you wish to play!");
@@ -131,13 +139,36 @@ public class Game {
 		System.out.println("----------------------------------------");
 		System.out.println("The Winner is : [" + winner.getName() + "]");
 		
-		in.close();
-		
 		winner.setWinner();
-		GameStats stats = new GameStats();
-		stats.updateHistory(playerList);
-		stats.printHistory();
 		
+		HighScoreStats stats = new HighScoreStats();
+		
+		stats.updateMasterFile(playerList);
+		
+		System.out.println("Would you like to view the current Rankings? If so, please enter a 1, otherwise just press enter.");
+		
+		Scanner scan = new Scanner(System.in);
+		
+		String show = scan.nextLine();
+		
+		in.close();
+		scan.close();
+		
+		if(show.equals("1")){
+			stats.Rankings();
+			
+			File rankfile = new File("rankings.txt");
+			Scanner ranks = new Scanner(rankfile);
+			
+			String viewRankings = "";
+			
+			while(ranks.hasNextLine()){
+				viewRankings += ranks.nextLine() + "\n";
+			}
+			
+			System.out.println(viewRankings);
+			
+			ranks.close();
+		}
 	}
-
 }
